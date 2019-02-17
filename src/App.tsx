@@ -1,17 +1,17 @@
 import * as React from 'react';
 
+import { Provider } from 'react-redux'
+
+import Router from './Router'
+import { store } from './store'
+
 class App extends React.Component {
-  public render() {
+  render() {
     return (
-      <div>
-        <header>
-          <h1>Welcome to React</h1>
-        </header>
-        <p>
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
-      </div>
-    );
+      <Provider store={store}>
+        <Router />
+      </Provider>
+    )
   }
 }
 
