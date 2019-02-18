@@ -38,13 +38,3 @@ export class API {
     // this.delete = this.baseClient.delete
   }
 }
-
-let singleton
-
-export const setupSingleton = (
-  host: string,
-  authorizationCode: string,
-  klass = API,
-) => (singleton = new klass(host, authorizationCode))
-export const setSingleton = (instance: API) => (singleton = instance)
-export const getSingleton = () => singleton

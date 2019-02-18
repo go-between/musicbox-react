@@ -1,14 +1,21 @@
 import { routerMiddleware } from 'connected-react-router'
 import { createBrowserHistory } from 'history'
+import createSagaMiddleware from 'redux-saga'
+import { fork } from 'redux-saga/effects'
 import { compose, createStore, applyMiddleware, Store } from 'redux'
 
+import { setupSingleton } from './client'
+
 import reducer from './reducers'
+import { default as userSaga } from './models/user/sagas'
+
+setupSingleton('http://localhost:3000', '')
 
 export const history = createBrowserHistory()
 const routeMiddleware = routerMiddleware(history)
+const sagaMiddleware = createSagaMiddleware()
 
-const initialState = {
-}
+const initialState = {}
 
 const composeEnhancers =
   typeof window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ === 'undefined'
@@ -20,5 +27,12 @@ export const store: Store<any> = createStore(
   initialState,
   composeEnhancers(
     applyMiddleware(routeMiddleware),
+    applyMiddleware(sagaMiddleware),
   ),
 )
+
+function* rootSaga() {
+  yield fork(userSaga)
+}
+
+sagaMiddleware.run(rootSaga)
