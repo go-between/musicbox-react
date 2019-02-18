@@ -1,5 +1,3 @@
-import { push } from 'connected-react-router'
-
 type RequestMiddleware = (req: RequestInit) => RequestInit
 type ResponseMiddleware = (res: Promise<Response>) => Promise<Response>
 type MultiMiddleware = {
@@ -13,7 +11,7 @@ const statusOK = (): ResponseMiddleware => response =>
       return Promise.resolve(res)
     }
 
-    return Promise.reject("Error!")
+    return Promise.reject('Error!')
   })
 
 const authorize = (authorization: string): RequestMiddleware => req => ({

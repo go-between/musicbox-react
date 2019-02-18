@@ -1,7 +1,7 @@
-import { APIUser } from '../../Client/types'
+import { APIUser } from '../../client'
 import { User } from './types'
 
-export default (user: APIUser): User => {
+export const userDeserializer = (user: APIUser): User => {
   const { name, email } = user.attributes
   return {
     name,
