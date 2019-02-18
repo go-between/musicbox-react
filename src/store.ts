@@ -9,11 +9,14 @@ import { setupSingleton } from './client'
 import reducer from './reducers'
 import { default as userSaga } from './models/user/sagas'
 
+import { default as websocketSaga } from './cable/sagas'
+
 setupSingleton('http://localhost:3000', '')
 
 export const history = createBrowserHistory()
 const routeMiddleware = routerMiddleware(history)
 const sagaMiddleware = createSagaMiddleware()
+const websocketSagaMiddleware = createSagaMiddleware()
 
 const initialState = {}
 
@@ -28,6 +31,7 @@ export const store: Store<any> = createStore(
   composeEnhancers(
     applyMiddleware(routeMiddleware),
     applyMiddleware(sagaMiddleware),
+    applyMiddleware(websocketSagaMiddleware),
   ),
 )
 
@@ -36,3 +40,4 @@ function* rootSaga() {
 }
 
 sagaMiddleware.run(rootSaga)
+sagaMiddleware.run(websocketSaga)
