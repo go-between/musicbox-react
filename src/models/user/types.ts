@@ -8,10 +8,10 @@ export const types: Types = {
   GET_USERS
 }
 
-type GetUsers = (returnOK, returnERR) => {
+type GetUsers = <OK, ERR>(returnOK: OK, returnERR: ERR) => {
   type: typeof GET_USERS,
-  returnOK,
-  returnERR,
+  returnOK: OK,
+  returnERR: ERR,
 }
 
 export type GetUsersOK<T> = (type: T, users: User[]) => {
