@@ -4,6 +4,7 @@
     "exclude": ["**/__tests__/**"]
   },
   "rules": {
+    "no-console": false,
     "arrow-parens": false,
     "arrow-return-shorthand": [false],
     "comment-format": [true, "check-space"],
