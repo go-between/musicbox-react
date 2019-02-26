@@ -1,5 +1,7 @@
 import { take, call, put } from 'redux-saga/effects'
 import { eventChannel } from 'redux-saga'
+import { songDeserializer, actions } from '../models/song'
+
 function initWebsocket() {
 
   return eventChannel(emitter => {
@@ -20,20 +22,16 @@ function initWebsocket() {
     }
 
     ws.onmessage = (e) => {
-      let msg = null
-
-      try {
-        msg = JSON.parse(e.data)
-      } catch (e) {
-        console.error(`Error parsing : ${e.data}`)
+      const msg = JSON.parse(e.data)
+      if (msg.type) {
+        return
       }
 
-      if (msg) {
-        console.log('Message', msg)
-      }
-
-      return emitter({ type: 'SOCKET' })
+      console.log(msg.message.songs)
+      const songs = msg.message.songs.map(songDeserializer)
+      return emitter(actions.receiveSongs(songs))
     }
+
     // unsubscribe function
     return () => {
       console.log('Socket off')
