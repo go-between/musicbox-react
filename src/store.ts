@@ -4,14 +4,16 @@ import createSagaMiddleware from 'redux-saga'
 import { fork } from 'redux-saga/effects'
 import { compose, createStore, applyMiddleware, Store } from 'redux'
 
-import { setupSingleton } from './client'
+import { setupSingleton as cableClient } from './cable'
+import { setupSingleton as apiClient } from './client'
 
 import reducer from './reducers'
 import { default as userSaga } from './models/user/sagas'
 
 import { default as websocketSaga } from './cable/sagas'
 
-setupSingleton('http://localhost:3000', '')
+apiClient('http://localhost:3000', '')
+cableClient({ debug: true })
 
 export const history = createBrowserHistory()
 const routeMiddleware = routerMiddleware(history)
