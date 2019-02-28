@@ -7,6 +7,8 @@ import { actions } from '../models/user'
 import { State as RootState } from '../reducers'
 import { State, types } from './redux'
 
+import ReactPlayer from 'react-player'
+
 const Container = system({
   is: 'p',
   display: ['block', 'flex'],
@@ -20,8 +22,18 @@ class Room extends React.Component<Props, {}> {
   }
 
   render() {
-    const users = this.props.users.map(u => u.name)
-    return <Container>Hi: {users}</Container>
+    const {
+      users,
+      songs,
+    } = this.props
+
+    const player = songs.length > 0 ? <ReactPlayer url={songs[0].url} playing={true} /> : ''
+    return(
+      <>
+        <Container>Hi: {users.length > 0 && users[0].name}</Container>
+        {player}
+      </>
+    )
   }
 }
 
