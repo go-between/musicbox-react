@@ -10,6 +10,8 @@ export type APIUser = {
 export type APISong = {
   id: string
   type: 'songs'
-  name: string
-  url: string
+  attributes: {
+    name: string
+    url: string
+  }
 }
