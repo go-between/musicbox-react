@@ -1,7 +1,7 @@
 import { Action, Callback, Channel, DataMessage, Message, Options, Payloads, QUEUES_CHANNEL } from './types'
 import { songDeserializer } from '../models/song'
 
-class Subscription {
+class Client {
   private channels: Channel[] = [QUEUES_CHANNEL]
   private debug: boolean
   private subscriptions: { [k in Channel]: { [component: string]: Callback<Channel> } }
@@ -73,9 +73,9 @@ class Subscription {
   }
 }
 
-let singleton: Subscription
-export const getSingleton = (): Subscription => singleton
+let singleton: Client
+export const getSingleton = (): Client => singleton
 export const setupSingleton = (
   options: Options,
-  klass: typeof Subscription = Subscription,
+  klass: typeof Client = Client,
 ) => (singleton = new klass(options))
