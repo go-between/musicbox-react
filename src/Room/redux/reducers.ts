@@ -9,7 +9,7 @@ export const initialState: State = {
 export default function reducer(state: State = initialState, action: Action) {
   switch (action.type) {
     case(types.GET_USERS_OK):
-      return { users: action.users }
+      return { users: action.users, songs: state.songs }
     case(songTypes.RECEIVE_SONGS):
       return { users: state.users, songs: action.songs }
     default:
