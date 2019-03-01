@@ -1,41 +1,22 @@
 import { take, call, put } from 'redux-saga/effects'
 import { eventChannel } from 'redux-saga'
-import { songDeserializer, actions } from '../models/song'
+import { getSingleton } from './client'
 
 function initWebsocket() {
-
+  const client = getSingleton()
+  const ws = new WebSocket('ws://localhost:3000/cable')
   return eventChannel(emitter => {
-    const ws = new WebSocket('ws://localhost:3000/cable')
-    ws.onopen = () => {
-      console.log('opening...')
-      ws.send(
-        JSON.stringify({
-          command: 'subscribe',
-          identifier: JSON.stringify({ channel: 'SongsChannel' })
-        })
-      )
-    }
-
-    ws.onerror = (error) => {
-      console.log('WebSocket error ' + error)
-      console.dir(error)
-    }
-
-    ws.onmessage = (e) => {
-      const msg = JSON.parse(e.data)
-      if (msg.type) {
-        return
+    ws.onopen = () => client.generateSubscriptions().forEach(s => ws.send(s))
+    ws.onerror = client.error
+    ws.onmessage = (event: MessageEvent) => {
+      const actions = client.parse(event)
+      if (!actions) {
+        return;
       }
-
-      console.log(msg.message.songs)
-      const songs = msg.message.songs.map(songDeserializer)
-      return emitter(actions.receiveSongs(songs))
+      return actions.map(a => emitter(a))
     }
 
-    // unsubscribe function
-    return () => {
-      console.log('Socket off')
-    }
+    return client.signOff
   })
 }
 export default function* saga() {
