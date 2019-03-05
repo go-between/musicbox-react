@@ -2,15 +2,21 @@ import { Action, types, State } from './types'
 
 export const initialState: State = {
   users: [],
-  songs: []
+  songs: [],
+  query: '',
+  results: [],
 }
 
-export default function reducer(state: State = initialState, action: Action) {
+export default function reducer(state: State = initialState, action: Action): State {
   switch (action.type) {
     case(types.GET_USERS_OK):
-      return { users: action.users, songs: state.songs }
+      return { ...state, users: action.users}
     case(types.RECEIVE_SONGS):
-      return { users: state.users, songs: action.songs }
+      return { ...state, songs: action.songs }
+    case(types.CHANGE_QUERY):
+      return { ...state, query: action.query}
+    case(types.GET_RESULTS_OK):
+      return {...state, results: action.results}
     default:
       return state
   }
