@@ -8,12 +8,12 @@ import { setupSingleton as cableClient } from './cable'
 import { setupSingleton as apiClient } from './client'
 
 import reducer from './reducers'
+import { sagas } from './Room/redux'
 import { default as userSaga } from './models/user/sagas'
-
 import { default as websocketSaga } from './cable/sagas'
 
 apiClient('http://localhost:3000', '')
-cableClient({ debug: true })
+cableClient({ debug: false })
 
 export const history = createBrowserHistory()
 const routeMiddleware = routerMiddleware(history)
@@ -39,6 +39,7 @@ export const store: Store<any> = createStore(
 
 function* rootSaga() {
   yield fork(userSaga)
+  yield fork(sagas)
 }
 
 sagaMiddleware.run(rootSaga)
