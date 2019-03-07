@@ -30,6 +30,7 @@ declare module 'youtube-api-v3-search' {
       liveBroadcastContent: string
     }
   }
+
   export type Results = {
     kind: "youtube#searchListResponse"
     etag: string
@@ -41,6 +42,6 @@ declare module 'youtube-api-v3-search' {
     },
     items: Result[]
   }
-  export default (url: string, options: Options) => new Promise<Results>
 
+  export default (url: string, options: Options) => new Promise<Results>
 }
