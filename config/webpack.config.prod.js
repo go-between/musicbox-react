@@ -3,6 +3,7 @@
 const autoprefixer = require('autoprefixer');
 const path = require('path');
 const webpack = require('webpack');
+const Dotenv = require('dotenv-webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
@@ -29,6 +30,8 @@ const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== 'false';
 const publicUrl = publicPath.slice(0, -1);
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
+
+const dotEnvPlugin = new Dotenv({ path: './.env' });
 
 // Assert this just to be safe.
 // Development builds of React are slow and not intended for production.
@@ -103,7 +106,6 @@ module.exports = {
       '.jsx',
     ],
     alias: {
-      
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
@@ -150,7 +152,7 @@ module.exports = {
             include: paths.appSrc,
             loader: require.resolve('babel-loader'),
             options: {
-              
+
               compact: true,
             },
           },
@@ -369,6 +371,7 @@ module.exports = {
       tsconfig: paths.appTsProdConfig,
       tslint: paths.appTsLint,
     }),
+    dotEnvPlugin,
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
