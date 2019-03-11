@@ -33,9 +33,9 @@ type ChangeQuery = (query: string) => {
   query: string
 }
 
-type GetResultsOK = (results: Result[]) => {
+type GetResultsOK = (results: YoutubeResult[]) => {
   type: typeof GET_RESULTS_OK,
-  results: Result[]
+  results: YoutubeResult[]
 }
 
 export type Action =
@@ -50,7 +50,7 @@ export type ActionCreators = {
   GetResultsOK: GetResultsOK
 }
 
-export type Result = {
+export type YoutubeResult = {
   description: string
   id: string
   image: string
@@ -61,5 +61,5 @@ export type State = {
   users: User[]
   songs: Song[]
   query: string
-  results: Result[]
+  results: YoutubeResult[]
 }

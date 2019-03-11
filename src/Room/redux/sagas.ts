@@ -1,24 +1,21 @@
-import { put, takeLatest } from 'redux-saga/effects'
-import searchYoutube from 'youtube-api-v3-search'
+import { delay, put, takeLatest } from 'redux-saga/effects'
+import searchYoutube, { Options, Results } from 'youtube-api-v3-search'
 import { ActionCreators, types } from './types'
 import actions from './actions'
+import { youtubeDeserializer } from './deserializers'
 
 function* querySongs(
   action: ReturnType<ActionCreators['ChangeQuery']>,
 ) {
-  const options = {
+  yield delay(250)
+
+  const options: Options = {
     q: action.query,
     part: 'snippet',
     type: 'video',
   }
-  const data = yield searchYoutube('AIzaSyCaHX0cdxArGxQIAgaBXYVvnh5qAxFo7gI', options)
-  console.log(data)
-  const results = data.items.map(item => ({
-    id: item.id.videoId,
-    description: item.snippet.description,
-    title: item.snippet.title,
-    image: item.snippet.thumbnails.default.url,
-  }))
+  const data = (yield searchYoutube('AIzaSyCaHX0cdxArGxQIAgaBXYVvnh5qAxFo7gI', options)) as Results
+  const results = data.items.map(youtubeDeserializer)
 
   yield put(actions.getResultsOK(results))
 }
