@@ -6,13 +6,13 @@ import { compose, createStore, applyMiddleware, Store } from 'redux'
 
 import { setupSingleton as cableClient } from './cable'
 import { setupSingleton as apiClient } from './client'
-
+import { API_HOST } from './lib/constants'
 import reducer from './reducers'
 import { sagas } from './Room/redux'
 import { default as userSaga } from './models/user/sagas'
 import { default as websocketSaga } from './cable/sagas'
 
-apiClient('http://localhost:3000', '')
+apiClient(API_HOST, '')
 cableClient({ debug: false })
 
 export const history = createBrowserHistory()
