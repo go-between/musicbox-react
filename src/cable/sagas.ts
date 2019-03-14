@@ -1,10 +1,11 @@
 import { take, call, put } from 'redux-saga/effects'
 import { eventChannel } from 'redux-saga'
 import { getSingleton } from './client'
+import { WS_HOST } from '../lib/constants'
 
 function initWebsocket() {
   const client = getSingleton()
-  const ws = new WebSocket('ws://localhost:3000/cable')
+  const ws = new WebSocket(WS_HOST)
   return eventChannel(emitter => {
     ws.onopen = () => client.generateSubscriptions().forEach(s => ws.send(s))
     ws.onerror = client.error
