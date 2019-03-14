@@ -8,10 +8,17 @@ export type APIUser = {
 }
 
 export type APISong = {
-  id: string
+  id?: string
   type: 'songs'
   attributes: {
     name: string
     url: string
+  },
+  relationships?: {
+    room: {
+      data: {
+        type: 'rooms', id: string
+      }
+    }
   }
 }
