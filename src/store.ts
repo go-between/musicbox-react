@@ -9,6 +9,7 @@ import { setupSingleton as apiClient } from './client'
 import { API_HOST } from './lib/constants'
 import reducer from './reducers'
 import { sagas } from './Room/redux'
+import { default as songSaga } from './models/song/sagas'
 import { default as userSaga } from './models/user/sagas'
 import { default as websocketSaga } from './cable/sagas'
 
@@ -39,6 +40,7 @@ export const store: Store<any> = createStore(
 
 function* rootSaga() {
   yield fork(userSaga)
+  yield fork(songSaga)
   yield fork(sagas)
 }
 

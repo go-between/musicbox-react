@@ -7,13 +7,20 @@ type ApiMethod = (
   params?: object,
 ) => Promise<object>
 
-// type ApiPostMethod = (
-//   path: string,
-//   body: string | RequestInit['body'],
-//   params?: object,
-// ) => Promise<object>
+type ApiPostMethod = (
+  path: string,
+  body: string | RequestInit['body'],
+  params?: object,
+) => Promise<object>
 
 export class API {
+  rooms: any = {
+    id: (id) => ({
+      song: {
+        create: (body, params) => this.post(`/api/v1/rooms/${id}/songs`, body, params)
+      }
+    })
+  }
   users: any = {
     index: params => this.get('/api/v1/users', params),
   }
@@ -21,7 +28,7 @@ export class API {
   private baseClient: Client
   private get: ApiMethod
   // private put: ApiMethod
-  // private post: ApiPostMethod
+  private post: ApiPostMethod
   // private patch: ApiMethod
   // private delete: ApiMethod
 
@@ -33,7 +40,7 @@ export class API {
       .res(jsonapi())
     this.get = this.baseClient.get
     // this.put = this.baseClient.put
-    // this.post = this.baseClient.post
+    this.post = this.baseClient.post
     // this.patch = this.baseClient.patch
     // this.delete = this.baseClient.delete
   }

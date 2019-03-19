@@ -4,6 +4,7 @@ import system from '@rebass/components'
 
 import { getSingleton, QUEUES_CHANNEL } from '../cable'
 import { actions as userActions } from '../models/user'
+import { actions as songActions } from '../models/song'
 
 import { State as RootState } from '../reducers'
 import { actions, State, types } from './redux'
@@ -20,7 +21,7 @@ const Input = system({
   is: 'input',
 })
 
-type Props = State & typeof userActions & typeof actions
+type Props = State & typeof userActions & typeof actions & typeof songActions
 
 class Room extends React.Component<Props, {}> {
   componentWillMount() {
@@ -41,15 +42,19 @@ class Room extends React.Component<Props, {}> {
       results,
     } = this.props
 
-    const player = songs.length > 0 ? <ReactPlayer url={songs[0].url} playing={true} /> : ''
-    const searchResults = results.map(result => (
-      <li key={result.id}>
-        <div>
-          {result.title} - {result.description}
-        </div>
+    const player = songs.length > 0 ? <ReactPlayer url={songs[songs.length - 1].url} playing={true} /> : ''
+    const searchResults = results.map(result => {
+      const url = `https://www.youtube.com/watch?v=${result.id}`
+      const onClick = () => this.props.createSong({url, name: result.title}, '', '')
 
-      </li>
-    ))
+      return (
+        <li key={result.id}>
+          <div onClick={onClick}>
+            {result.title} - {result.description}
+          </div>
+        </li>
+      )
+    })
     return(
       <>
         <Container>
@@ -70,7 +75,7 @@ class Room extends React.Component<Props, {}> {
 type MapStateToProps = (state: RootState) => State
 const mapStateToProps: MapStateToProps = (state) => state.room
 
-export default connect<State, typeof userActions, {}>(
+export default connect<State, typeof userActions & typeof songActions, {}>(
   mapStateToProps,
-  {...userActions, ...actions},
+  {...userActions, ...songActions, ...actions},
 )(Room)
