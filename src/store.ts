@@ -6,6 +6,7 @@ import { compose, createStore, applyMiddleware, Store } from 'redux'
 
 import { setupSingleton as cableClient } from './cable'
 import { setupSingleton as apiClient } from './client'
+import { setupSingleton as graphClient } from './graphql'
 import { API_HOST } from './lib/constants'
 import reducer from './reducers'
 import { sagas } from './Room/redux'
@@ -14,7 +15,8 @@ import { default as userSaga } from './models/user/sagas'
 import { default as websocketSaga } from './cable/sagas'
 
 apiClient(API_HOST, '')
-cableClient({ debug: false })
+cableClient({ debug: true })
+graphClient(`${API_HOST}/api/v1/graphql`, '')
 
 export const history = createBrowserHistory()
 const routeMiddleware = routerMiddleware(history)

@@ -41,26 +41,28 @@ class Room extends React.Component<Props, {}> {
       songs,
       results,
     } = this.props
-
-    const player = songs.length > 0 ? <ReactPlayer url={songs[songs.length - 1].url} playing={true} /> : ''
+    console.log(songs)
+    const url = songs.length > 0 ? `https://www.youtube.com/watch?v=${songs[songs.length - 1].youtubeId}` : ''
+    const player = songs.length > 0 ? <ReactPlayer url={url} playing={true} /> : ''
     const searchResults = results.map(result => {
-      const url = `https://www.youtube.com/watch?v=${result.id}`
-      const onClick = () => this.props.createSong({url, name: result.title}, '', '')
+      const onClick = () => this.props.createSong({ youtubeId: result.id }, '', '')
 
       return (
         <li key={result.id}>
           <div onClick={onClick}>
             {result.title} - {result.description}
+            <img src={result.image} />
           </div>
         </li>
       )
     })
+    const floop = () => this.props.createSong({ youtubeId: 'KFTz3a-kSj4' }, '', '')
     return(
       <>
         <Container>
           Hi: {users.length > 0 && users[0].name}
         </Container>
-
+        <button onClick={floop}>Go</button>
         <Input type="search" value={this.props.query} onChange={this.changeQuery}/>
 
         {player}

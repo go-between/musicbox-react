@@ -11,8 +11,7 @@ export type APISong = {
   id?: string
   type: 'songs'
   attributes: {
-    name: string
-    url: string
+    youtubeId: string
   },
   relationships?: {
     room: {
