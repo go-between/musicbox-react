@@ -32,6 +32,5 @@ export type ActionCreators = {
 }
 
 export type Song = {
-  name: string
-  url: string
+  youtubeId: string
 }
