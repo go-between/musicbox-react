@@ -5,8 +5,7 @@ export const songSerializer = (song: Song): APISong => {
   return {
     type: 'songs',
     attributes: {
-      name: song.name,
-      url: song.url
+      youtubeId: song.youtubeId
     }
   }
 }
