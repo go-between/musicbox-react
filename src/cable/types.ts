@@ -1,4 +1,3 @@
-import { APISong } from '../client/index'
 import { Song } from '../models/song'
 
 // Channels
@@ -30,7 +29,7 @@ export type SystemMessage =
 export type SongMessage = {
   identifier: Identifier
   message: {
-    data: APISong[]
+    data: any[]
   }
   type: undefined
 }
