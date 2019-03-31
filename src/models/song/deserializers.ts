@@ -1,9 +1,10 @@
-import { APISong } from '../../client'
+import { APICreateSongResponse, APISongResponse } from '../../graphql'
 import { Song } from './types'
 
-export const songDeserializer = (song: APISong): Song => {
-  const { youtubeId } = song.attributes
-  return {
-    youtubeId,
-  }
+export const createSongDeserializer = (response: APICreateSongResponse): Song => {
+  return response.createSong.song
+}
+
+export const songsDeserializer = (response: APISongResponse): Song[] => {
+  return response.songs.map(s => s)
 }

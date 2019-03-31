@@ -9,14 +9,19 @@ import { setupSingleton as apiClient } from './client'
 import { setupSingleton as graphClient } from './graphql'
 import { API_HOST } from './lib/constants'
 import reducer from './reducers'
-import { sagas } from './Room/redux'
+
 import { default as songSaga } from './models/song/sagas'
 import { default as userSaga } from './models/user/sagas'
+import { default as youtubeSearchSaga } from './YoutubeSearch/redux/sagas'
 import { default as websocketSaga } from './cable/sagas'
 
 apiClient(API_HOST, '')
 cableClient({ debug: true })
-graphClient(`${API_HOST}/api/v1/graphql`, '')
+graphClient(
+  `${API_HOST}/api/v1/graphql`,
+  'a163fef29888ac08a8c987fdf49c097ec7675e98d455304f81188b38fd7091d8',
+  { debug: true }
+)
 
 export const history = createBrowserHistory()
 const routeMiddleware = routerMiddleware(history)
@@ -43,7 +48,7 @@ export const store: Store<any> = createStore(
 function* rootSaga() {
   yield fork(userSaga)
   yield fork(songSaga)
-  yield fork(sagas)
+  yield fork(youtubeSearchSaga)
 }
 
 sagaMiddleware.run(rootSaga)

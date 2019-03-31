@@ -14,9 +14,9 @@ type GetUsers = <OK, ERR>(returnOK: OK, returnERR: ERR) => {
   returnERR: ERR,
 }
 
-export type GetUsersOK<T> = (type: T, users: User[]) => {
+export type GetUserOK<T> = (type: T, user: User) => {
   type: T,
-  users: User[],
+  user: User,
 }
 
 export type GetUsersERR<T> = (type: T, error: Error) => {
@@ -26,11 +26,11 @@ export type GetUsersERR<T> = (type: T, error: Error) => {
 
 export type ActionCreators = {
   GetUsers: GetUsers
-  GetUsersOK: GetUsersOK<any>
+  GetUserOK: GetUserOK<any>
   GetUsersERR: GetUsersERR<any>
 }
 
 export type User = {
-  name: string
+  id: string
   email: string
 }
