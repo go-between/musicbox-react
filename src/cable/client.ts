@@ -1,5 +1,4 @@
 import { Action, Callback, Channel, DataMessage, Message, Options, Payloads, QUEUES_CHANNEL } from './types'
-import { songDeserializer } from '../models/song'
 
 class Client {
   private channels: Channel[] = [QUEUES_CHANNEL]
@@ -65,9 +64,9 @@ class Client {
 
   private notify: (data: DataMessage) => Action[] = (data) => {
     if (data.identifier.channel === 'QueuesChannel') {
-      const payload = data.message.data.map(songDeserializer)
-      this.log(this.subscriptions)
-      return Object.values(this.subscriptions[data.identifier.channel]).map((c) => c(payload))
+      // const payload = data.message.data.map(songDeserializer)
+      // this.log(this.subscriptions)
+      // return Object.values(this.subscriptions[data.identifier.channel]).map((c) => c(payload))
     }
     return []
   }
