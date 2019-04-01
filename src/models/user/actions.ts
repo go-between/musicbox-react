@@ -6,9 +6,9 @@ const getUsers: ActionCreators['GetUsers'] = (returnOK, returnERR) => ({
   returnERR,
 })
 
-const getUsersOK: ActionCreators['GetUsersOK'] = (returnOK, users) => ({
+const getUserOK: ActionCreators['GetUserOK'] = (returnOK, user) => ({
   type: returnOK,
-  users,
+  user,
 })
 
 const getUsersERR: ActionCreators['GetUsersERR'] = (returnERR, error) => ({
@@ -18,6 +18,6 @@ const getUsersERR: ActionCreators['GetUsersERR'] = (returnERR, error) => ({
 
 export default {
   getUsers,
-  getUsersOK,
+  getUserOK,
   getUsersERR
 }

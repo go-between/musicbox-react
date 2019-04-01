@@ -1,10 +1,6 @@
-import { APIUser } from '../../client'
+import { APIUserResponse } from '../../graphql'
 import { User } from './types'
 
-export const userDeserializer = (user: APIUser): User => {
-  const { name, email } = user.attributes
-  return {
-    name,
-    email,
-  }
+export const usersDeserializer = (response: APIUserResponse): User[] => {
+  return response.users.map(u => u)
 }
