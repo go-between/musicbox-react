@@ -19,7 +19,7 @@ function* getSongs(
 ) {
   const api = getSingleton()
 
-  const response = yield apply(api, api.songs.library(), [])
+  const response = yield apply(api, api.songs.library, [])
   const songs = songsDeserializer(response)
   yield all(songs.map(s => put(actions.getSongOK(action.returnOK, s))))
 }
