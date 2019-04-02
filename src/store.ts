@@ -11,22 +11,31 @@ import reducer from './reducers'
 
 import { default as songSaga } from './models/song/sagas'
 import { default as userSaga } from './models/user/sagas'
+import { default as authSaga } from './Auth/redux/sagas'
 import { default as youtubeSearchSaga } from './YoutubeSearch/redux/sagas'
 import { default as websocketSaga } from './cable/sagas'
 
-cableClient({ debug: true })
-graphClient(
-  `${API_HOST}/api/v1/graphql`,
-  'a163fef29888ac08a8c987fdf49c097ec7675e98d455304f81188b38fd7091d8',
-  { debug: true }
-)
+import { initialState as authState } from './Auth/redux/reducers'
 
 export const history = createBrowserHistory()
 const routeMiddleware = routerMiddleware(history)
 const sagaMiddleware = createSagaMiddleware()
 const websocketSagaMiddleware = createSagaMiddleware()
 
-const initialState = {}
+const persistedState = JSON.parse(localStorage.getItem('musicbox') || '{ auth: {} }')
+const initialState = {
+  auth: {
+    ...authState,
+    token: persistedState.auth.token,
+  }
+}
+
+cableClient({ debug: true })
+graphClient(
+  `${API_HOST}/api/v1/graphql`,
+  initialState.auth.token,
+  { debug: true }
+)
 
 const composeEnhancers =
   typeof window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ === 'undefined'
@@ -43,7 +52,13 @@ export const store: Store<any> = createStore(
   ),
 )
 
+store.subscribe(() => {
+  const { auth } = store.getState()
+  localStorage.setItem('musicbox', JSON.stringify({ auth: { token: auth.token } }))
+})
+
 function* rootSaga() {
+  yield fork(authSaga)
   yield fork(userSaga)
   yield fork(songSaga)
   yield fork(youtubeSearchSaga)
