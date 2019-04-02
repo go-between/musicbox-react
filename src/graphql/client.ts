@@ -33,6 +33,9 @@ export default class Client {
     `)({ roomId })
   }
 
+  public host: string
+  public options: Options = {}
+
   private baseClient: any
   private fragments: any = {
     song: 'on Song { id, description, durationInSeconds, name, youtubeId }',
@@ -40,6 +43,9 @@ export default class Client {
   }
 
   constructor(host: string, authorizationCode: string | null, options: Options) {
+    this.host = host
+    this.options = options
+
     const graphQLOptions = {
       debug: options.debug,
       headers: {},
