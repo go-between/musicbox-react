@@ -36,5 +36,5 @@ export type APIUserResponse = {
 }
 
 export type Options = {
-  debug: boolean
+  debug?: boolean
 }
