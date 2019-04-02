@@ -22,11 +22,11 @@ const routeMiddleware = routerMiddleware(history)
 const sagaMiddleware = createSagaMiddleware()
 const websocketSagaMiddleware = createSagaMiddleware()
 
-const persistedState = JSON.parse(localStorage.getItem('musicbox') || '{ auth: {} }')
+const persistedState = JSON.parse(localStorage.getItem('musicbox') || '{}')
 const initialState = {
   auth: {
     ...authState,
-    token: persistedState.auth.token,
+    token: persistedState.auth && persistedState.auth.token,
   }
 }
 
