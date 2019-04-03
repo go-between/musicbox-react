@@ -36,7 +36,7 @@ export default {
     'none',
     `inset 0 0 0 1px ${colors.grayLight}`,
     `inset 0 0 0 1px ${colors.grayLight}, 0 0 4px ${colors.gray}`,
-    `0 2px 6px 0 ${colors.grayLight}`,
+    `0 2px 6px 0 hsla(0,0%,0%,0.2)`,
   ],
   space,
   textColor: colors.offBlack,
