@@ -2,6 +2,27 @@ import graphql from 'graphql.js'
 import { Options } from './types'
 
 export default class Client {
+  roomQueues: any = {
+    create: (roomId, songId, order) => this.baseClient.mutate(`
+      (@autodeclare) {
+        createRoomQueue(input: {roomId: $roomId, songId: $songId, order: $order}) {
+          roomQueue {
+            ...roomQueue
+          }
+          errors
+        }
+      }
+    `)({roomId, songId, order}),
+
+    index: (roomId) => this.baseClient.mutate(`
+      (@autodeclare) {
+        roomQueues(roomId: $roomId) {
+          ...roomQueue
+        }
+      }
+    `)({roomId}),
+  }
+
   songs: any = {
     create: (youtubeId) => this.baseClient.mutate(`
       (@autodeclare) {
@@ -20,7 +41,7 @@ export default class Client {
           ...song
         }
       }
-    `)
+    `)()
   }
 
   users: any = {
@@ -38,6 +59,8 @@ export default class Client {
 
   private baseClient: any
   private fragments: any = {
+    roomQueue: 'on RoomQueue { id, order, song { ...song }, room { ...room }, user { ...user } }',
+    room: 'on Room { id, name }',
     song: 'on Song { id, description, durationInSeconds, name, youtubeId }',
     user: 'on User { id, email } ',
   }

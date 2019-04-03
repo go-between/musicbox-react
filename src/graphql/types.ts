@@ -1,3 +1,16 @@
+type APIRoom = {
+  id: string
+  name: string
+}
+
+type APIRoomQueue = {
+  id: string
+  order: number
+  room: APIRoom
+  song: APISong
+  user: APIUser
+}
+
 type APISong = {
   id: string
   description: string
@@ -11,12 +24,10 @@ type APIUser = {
   email: string
 }
 
-export type APIRoomQueue = {
-  data: {
-    roomQueues: {
-      song: Pick<APISong, 'id'>
-      user: Pick<APIUser, 'email'>
-    }
+export type APICreateRoomQueueResponse = {
+  createRoomQueue: {
+    roomQueue: APIRoomQueue,
+    errors: string[]
   }
 }
 
@@ -33,6 +44,10 @@ export type APISongResponse = {
 
 export type APIUserResponse = {
   users: APIUser[]
+}
+
+export type APIRoomQueueResponse = {
+  roomQueues: APIRoomQueue[]
 }
 
 export type Options = {
