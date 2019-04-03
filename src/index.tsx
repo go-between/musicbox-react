@@ -4,6 +4,9 @@ import App from './App';
 import { ThemeProvider } from 'styled-components'
 import theme from 'theme'
 
+// tslint:disable no-import-side-effect
+import './styles/main.css'
+
 ReactDOM.render(
   <ThemeProvider theme={theme as any}>
     <App />
