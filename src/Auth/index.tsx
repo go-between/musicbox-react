@@ -1,15 +1,13 @@
 import * as React from 'react';
 import { connect } from 'react-redux'
-import system from '@rebass/components'
+import { Box, Button, Card, Heading } from 'rebass'
+import Input from '../components/input'
+import Label from '../components/label'
+import Section from '../components/section'
+import Wrapper from '../components/wrapper'
 
 import { State as RootState } from '../reducers'
 import { actions, State } from './redux'
-
-const Container = system({
-  is: 'div',
-  display: ['block', 'flex'],
-  flex: '1',
-})
 
 type Props = State & typeof actions
 
@@ -23,22 +21,48 @@ class Room extends React.Component<Props, {}> {
       return null
     }
 
-    return <Container>
+    return <Box>
       Error:  {this.props.error}
-    </Container>
+    </Box>
   }
 
   render() {
     return(
       <>
-        <Container>
-          Email: <input type="text" onChange={this.changeField('email')} value={this.props.email} />
-          Password: <input type="password" onChange={this.changeField('password')} value={this.props.password} />
-        </Container>
-        <Container>
-          <button onClick={this.props.signIn}>Sign In</button>
-        </Container>
-        {this.renderError()}
+        <Section bg="offWhite">
+          <Wrapper maxWidth="400px">
+            <Box is="header" textAlign="center" mb={3} bg="red">
+              <Heading is="h1" fontSize={6} >Music Box</Heading>
+            </Box>
+
+            <Card
+              bg="white"
+              boxShadow="0 2px 6px 0 hsla(0,0%,0%,0.2)"
+              p={4}
+            >
+              <Box mb={3}>
+                <Label>Email</Label>
+                <Input type="text" onChange={this.changeField('email')} value={this.props.email} />
+              </Box>
+
+              <Box mb={3}>
+                <Label>Password</Label>
+                <Input type="password" onChange={this.changeField('password')} value={this.props.password} />
+              </Box>
+
+              <Box mb={3}>
+                <Button
+                  bg="blue"
+                  color="white"
+                  onClick={this.props.signIn}
+                >
+                  Sign In
+                </Button>
+              </Box>
+            </Card>
+            {this.renderError()}
+          </Wrapper>
+        </Section>
       </>
     )
   }
