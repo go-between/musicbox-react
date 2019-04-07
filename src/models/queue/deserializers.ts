@@ -15,11 +15,10 @@ export const createQueueDeserializer = (response: APICreateRoomQueueResponse): Q
 
 export const queuesDeserializer = (response: APIRoomQueueResponse): Queue[] => {
   return response.roomQueues.map(roomQueue => {
-    const  { id, order, room, song, user } = roomQueue
+    const  { id, order, song, user } = roomQueue
     return {
       id,
       songId: song.id,
-      roomId: room.id,
       order,
       name: song.name,
       user: user.email,

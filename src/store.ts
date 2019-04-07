@@ -11,6 +11,7 @@ import reducer from './reducers'
 
 import { default as authSaga } from './Auth/redux/sagas'
 import { default as queueSaga } from './models/queue/sagas'
+import { default as roomSaga } from './models/room/sagas'
 import { default as songSaga } from './models/song/sagas'
 import { default as userSaga } from './models/user/sagas'
 
@@ -62,6 +63,7 @@ store.subscribe(() => {
 function* rootSaga() {
   yield fork(authSaga)
   yield fork(queueSaga)
+  yield fork(roomSaga)
   yield fork(songSaga)
   yield fork(userSaga)
   yield fork(youtubeSearchSaga)
