@@ -17,10 +17,10 @@ const SongItem = system({
   is: 'li'
 })
 
-type Props = State & typeof songActions & typeof queueActions
+type Props = State & typeof songActions & typeof queueActions & { roomId: string }
 
 class Room extends React.Component<Props, {}> {
-  componentWillMount() {
+  componentDidMount() {
     this.props.getSongs(types.GET_SONG_OK, types.GET_SONGS_ERR)
   }
 
@@ -39,7 +39,7 @@ class Room extends React.Component<Props, {}> {
     }
 
     const songList = songs.map(s => {
-      const onClick = () => this.addSongToQueue(1, '9a1660ed-609e-4d22-aec2-d2af8fa2ed6d', s.id)
+      const onClick = () => this.addSongToQueue(1, this.props.roomId, s.id)
       return <SongItem key={s.id} onClick={onClick}>{s.name}</SongItem>
     })
 
@@ -65,7 +65,7 @@ class Room extends React.Component<Props, {}> {
 type MapStateToProps = (state: RootState) => State
 const mapStateToProps: MapStateToProps = (state) => state.library
 
-export default connect<State, typeof songActions & typeof queueActions, {}>(
+export default connect<State, typeof songActions & typeof queueActions, { roomId: string }>(
   mapStateToProps,
   {
     ...songActions,
