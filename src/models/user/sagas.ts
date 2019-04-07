@@ -10,7 +10,7 @@ function* getUsers(
 ) {
   const api = getSingleton()
 
-  const roomId = yield select((s: RootState) => s.room.id)
+  const roomId = yield select((s: RootState) => s.room.base.id)
 
   const response = yield apply(api, api.users.inRoom, [roomId])
   const songs = usersDeserializer(response)

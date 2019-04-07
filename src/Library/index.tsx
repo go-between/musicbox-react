@@ -44,7 +44,6 @@ class Room extends React.Component<Props, {}> {
     })
 
     return <>
-      Your Songs
       <SongList>
         {songList}
       </SongList>

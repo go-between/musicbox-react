@@ -1,11 +1,15 @@
+import { combineReducers } from 'redux'
+
+import { reducer as playerReducer } from '../components/Player/redux'
+import { reducer as roomQueueReducer } from '../components/RoomQueue/redux'
 import { Action, types, State } from './types'
 
-export const initialState: State = {
-  id: '',
-  name: '',
+export const initialState: State['base'] = {
+  id: null,
+  name: null,
 }
 
-export default function reducer(state: State = initialState, action: Action): State {
+export function reducer(state: State['base'] = initialState, action: Action): State['base'] {
   switch (action.type) {
     case types.JOIN_ROOM_OK:
       return { ...state, id: action.room.id, name: action.room.name }
@@ -13,3 +17,9 @@ export default function reducer(state: State = initialState, action: Action): St
       return state
   }
 }
+
+export default combineReducers({
+  base: reducer,
+  player: playerReducer,
+  roomQueue: roomQueueReducer,
+})
