@@ -21,7 +21,7 @@ class Routes extends React.Component<Props> {
       <Switch>
         <Route
           exact={true}
-          path="/room"
+          path="/room/:id"
           component={Room}
         />
       </Switch>
