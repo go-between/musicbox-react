@@ -42,10 +42,10 @@ export type ActionCreators = {
 }
 
 export type Room = {
-  currentSong: Song
-  currentSongStart: Moment
-  id: string
-  name: string
+  currentSong: Song | null
+  currentSongStart: Moment | null
+  id: string | null
+  name: string | null
   queue: Queue[]
   users: User[]
 }

@@ -20,7 +20,7 @@ function* getSongs(
   const api = getSingleton()
 
   const response = yield apply(api, api.roomQueues.index, [])
-  const songs = queuesDeserializer(response)
+  const songs = queuesDeserializer(response.roomQueues)
   yield all(songs.map(s => put(actions.getQueueOK(action.returnOK, s))))
 }
 

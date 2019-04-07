@@ -10,7 +10,7 @@ export const joinRoomDeserializer = (response: APIJoinRoomResponse): Room => {
     currentSongStart: moment(currentSongStart),
     id,
     name,
-    queue: queuesDeserializer({ roomQueues: enqueues }),
+    queue: queuesDeserializer(enqueues),
     users,
   }
 }

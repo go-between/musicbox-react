@@ -1,2 +1,2 @@
 export { default as reducer } from './reducers'
-export * from './types'
+export { State, types } from './types'
