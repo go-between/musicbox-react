@@ -64,7 +64,7 @@ export type ActionCreators = {
 export type Queue = {
   id: string
   songId: string
-  roomId: string
+  roomId?: string
   order: number
   name: string
   user: string
