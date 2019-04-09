@@ -1,5 +1,3 @@
-import { Song } from '../models/song'
-
 // Channels
 export const QUEUES_CHANNEL = 'QueuesChannel'
 
@@ -29,7 +27,7 @@ export type SystemMessage =
 export type SongMessage = {
   identifier: Identifier
   message: {
-    data: any[]
+    data: any
   }
   type: undefined
 }
@@ -40,8 +38,12 @@ export type Message =
   | SystemMessage
   | DataMessage
 
+// Data
+export type Subscriptions = {
+  [QUEUES_CHANNEL]: { room_id: string }
+}
+
 // Utilities
-export type Payloads = Song[]
-export type Callback<C> = (p: Payloads) => Action
+export type Callback<T> = (payload: T) => Action
 export type Action = { type: string }
 export type Options = { debug: boolean }

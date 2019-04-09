@@ -1,6 +1,10 @@
 type APIRoom = {
   id: string
   name: string
+  currentSong: APISong
+  currentSongStart: string
+  enqueues: APIRoomQueue[]
+  users: APIUser[]
 }
 
 type APIRoomQueue = {
@@ -35,6 +39,12 @@ export type APICreateSongResponse = {
   createSong: {
     song: APISong,
     errors: string[]
+  }
+}
+
+export type APIJoinRoomResponse = {
+  joinRoom: {
+    room: APIRoom
   }
 }
 

@@ -4,22 +4,14 @@ import { getSingleton } from './client'
 import { WS_HOST } from '../lib/constants'
 
 function initWebsocket() {
-  const client = getSingleton()
   const ws = new WebSocket(WS_HOST)
+  const client = getSingleton()
   return eventChannel(emitter => {
-    ws.onopen = () => client.generateSubscriptions().forEach(s => ws.send(s))
-    ws.onerror = client.error
-    ws.onmessage = (event: MessageEvent) => {
-      const actions = client.parse(event)
-      if (!actions) {
-        return;
-      }
-      return actions.map(a => emitter(a))
-    }
-
-    return client.signOff
+    ws.onopen = () => client.bind(ws, emitter)
+    return () => console.log('Sign Off')
   })
 }
+
 export default function* saga() {
   const channel = yield call(initWebsocket)
   while (true) {
