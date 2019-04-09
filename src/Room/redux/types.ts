@@ -1,22 +1,26 @@
-import { GetUserOK, User } from '../../models/user'
+import { State as PlayerState } from '../components/Player/redux'
+import { State as RoomQueueState } from '../components/RoomQueue/redux'
 
-const GET_USER_OK = 'app/Room/GET_USER_OK'
-const GET_USERS_ERR = 'app/Room/GET_USERS_ERR'
+import { JoinRoomOK, Room } from 'models/room'
+
+const JOIN_ROOM_OK = 'app/Room/JOIN_ROOM_OK'
+const JOIN_ROOMS_ERR = 'app/Room/JOIN_ROOMS_ERR'
 
 type Types = {
-  GET_USER_OK: typeof GET_USER_OK
-  GET_USERS_ERR: typeof GET_USERS_ERR
+  JOIN_ROOM_OK: typeof JOIN_ROOM_OK
+  JOIN_ROOMS_ERR: typeof JOIN_ROOMS_ERR
 }
 
 export const types: Types = {
-  GET_USER_OK,
-  GET_USERS_ERR,
+  JOIN_ROOM_OK,
+  JOIN_ROOMS_ERR,
 }
 
 export type Action =
-  | ReturnType<GetUserOK<Types['GET_USER_OK']>>
+  | ReturnType<JoinRoomOK<Types['JOIN_ROOM_OK']>>
 
 export type State = {
-  roomId: string | null
-  users: User[]
+  base: Pick<Room, 'id' | 'name'>
+  player: PlayerState
+  roomQueue: RoomQueueState
 }

@@ -2,6 +2,19 @@ import graphql from 'graphql.js'
 import { Options } from './types'
 
 export default class Client {
+  rooms: any = {
+    joinRoom: (roomId) => this.baseClient.mutate(`
+      (@autodeclare) {
+        joinRoom(input: {roomId: $roomId}) {
+          room {
+            ...room
+          }
+          errors
+        }
+      }
+    `)({roomId})
+  }
+
   roomQueues: any = {
     create: (roomId, songId, order) => this.baseClient.mutate(`
       (@autodeclare) {
@@ -59,8 +72,9 @@ export default class Client {
 
   private baseClient: any
   private fragments: any = {
+    enqueue: 'on Enqueue { order, song { ...song }, user { ...user } }',
     roomQueue: 'on RoomQueue { id, order, song { ...song }, room { ...room }, user { ...user } }',
-    room: 'on Room { id, name }',
+    room: 'on Room { currentSong { ...song }, currentSongStart, id, name, enqueues { ...enqueue }, users { ...user } }',
     song: 'on Song { id, description, durationInSeconds, name, youtubeId }',
     user: 'on User { id, email } ',
   }
