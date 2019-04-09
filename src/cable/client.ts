@@ -1,5 +1,10 @@
-import { Action, Callback, Channel, DataMessage, Message, Options, QUEUES_CHANNEL, Subscriptions } from './types'
+import {
+  Action,
+  Callback,
+  Channel,
+  DataMessage, Message, NOW_PLAYING_CHANNEL, Options, QUEUES_CHANNEL, Subscriptions } from './types'
 import { Queue, queuesDeserializer } from 'models/queue'
+// import { Room } from 'models/room'
 
 class Client {
   private debug: boolean
@@ -10,7 +15,8 @@ class Client {
   constructor({ debug }: Options) {
     this.debug = debug
     this.subscriptions = {
-      QueuesChannel: {}
+      QueuesChannel: {},
+      NowPlayingChannel: {}
     }
   }
 
@@ -29,6 +35,11 @@ class Client {
   }
 
   public subscribeTo = (component: string) => ({
+    nowPlaying: (roomId: string, callback: Callback<any>) => {
+      this.send(this.generateSubscription(NOW_PLAYING_CHANNEL, { room_id: roomId }))
+      this.log('subscription', NOW_PLAYING_CHANNEL, component, callback)
+      this.subscriptions[NOW_PLAYING_CHANNEL][component] = callback
+    },
     roomQueue: (roomId: string, callback: Callback<Queue[]>) => {
       this.send(this.generateSubscription(QUEUES_CHANNEL, { room_id: roomId }))
       this.log('subscription', QUEUES_CHANNEL, component, callback)

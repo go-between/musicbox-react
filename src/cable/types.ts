@@ -1,11 +1,13 @@
 // Channels
 export const QUEUES_CHANNEL = 'QueuesChannel'
+export const NOW_PLAYING_CHANNEL = 'NowPlayingChannel'
 
 export type Channel =
   | typeof QUEUES_CHANNEL
+  | typeof NOW_PLAYING_CHANNEL
 
 export type Identifier = {
-  channel: typeof QUEUES_CHANNEL
+  channel: Channel
 }
 
 export type Ping = {
@@ -41,6 +43,7 @@ export type Message =
 // Data
 export type Subscriptions = {
   [QUEUES_CHANNEL]: { room_id: string }
+  [NOW_PLAYING_CHANNEL]: { room_id: string }
 }
 
 // Utilities
