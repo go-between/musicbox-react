@@ -1,4 +1,4 @@
-import { GetUserOK, User } from '../../models/user'
+import { GetUserOK, User } from 'models/user'
 
 const GET_USER_OK = 'app/Room/GET_USER_OK'
 const GET_USERS_ERR = 'app/Room/GET_USERS_ERR'
