@@ -2,7 +2,7 @@ import { Room } from 'models/room'
 import { Queue } from 'models/queue'
 import { Action as RoomAction } from 'Room/redux/types'
 
-const UPDATE_QUEUE = 'app/Room/RoomQueue/UPDATE_QUEUE'
+const UPDATE_QUEUE = 'app/Room/RoomSong/UPDATE_QUEUE'
 
 type Types = {
   UPDATE_QUEUE: typeof UPDATE_QUEUE

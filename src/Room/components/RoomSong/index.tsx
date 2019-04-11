@@ -12,10 +12,10 @@ const Song = system({ is: 'li' })
 
 type PassedProps = { roomId: string }
 type Props = State & PassedProps & typeof actions
-class RoomQueue extends React.Component<Props, {}> {
+class RoomSong extends React.Component<Props, {}> {
   componentDidMount() {
     const client = getSingleton()
-    client.subscribeTo('roomQueue').roomQueue(this.props.roomId, actions.updateQueue)
+    client.subscribeTo('roomSong').roomSong(this.props.roomId, actions.updateQueue)
   }
 
   render() {
@@ -31,9 +31,9 @@ class RoomQueue extends React.Component<Props, {}> {
 }
 
 type MapStateToProps = (state: RootState) => State
-const mapStateToProps: MapStateToProps = (state) => state.room.roomQueue
+const mapStateToProps: MapStateToProps = (state) => state.room.roomSong
 
 export default connect<State, typeof actions, PassedProps>(
   mapStateToProps,
   actions
-)(RoomQueue)
+)(RoomSong)
