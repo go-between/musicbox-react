@@ -1,8 +1,8 @@
-import { APICreateRoomQueueResponse, APIRoomQueueResponse } from '../../graphql'
+import { APICreateRoomSongResponse, APIRoomSongResponse } from '../../graphql'
 import { Queue } from './types'
 
-export const createQueueDeserializer = (response: APICreateRoomQueueResponse): Queue => {
-  const { roomQueue: {id, order, room, song, user} } = response.createRoomQueue
+export const createQueueDeserializer = (response: APICreateRoomSongResponse): Queue => {
+  const { roomSong: {id, order, room, song, user} } = response.createRoomSong
   return {
     id,
     songId: song.id,
@@ -13,9 +13,9 @@ export const createQueueDeserializer = (response: APICreateRoomQueueResponse): Q
   }
 }
 
-export const queuesDeserializer = (roomQueues: APIRoomQueueResponse['roomQueues']): Queue[] => {
-  return roomQueues.map(roomQueue => {
-    const  { id, order, song, user } = roomQueue
+export const queuesDeserializer = (roomSongs: APIRoomSongResponse['roomSongs']): Queue[] => {
+  return roomSongs.map(roomSong => {
+    const  { id, order, song, user } = roomSong
     return {
       id,
       songId: song.id,

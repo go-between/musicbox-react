@@ -1,5 +1,5 @@
 import { State as PlayerState } from '../components/Player/redux'
-import { State as RoomQueueState } from '../components/RoomQueue/redux'
+import { State as RoomSongState } from '../components/RoomSong/redux'
 
 import { JoinRoomOK, Room } from 'models/room'
 
@@ -22,5 +22,5 @@ export type Action =
 export type State = {
   base: Pick<Room, 'id' | 'name'>
   player: PlayerState
-  roomQueue: RoomQueueState
+  roomSong: RoomSongState
 }
