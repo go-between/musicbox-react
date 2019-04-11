@@ -9,7 +9,7 @@ function* createQueue(
 ) {
   const api = getSingleton()
 
-  const response = yield apply(api, api.roomQueues.create, [action.roomId, action.songId, action.order])
+  const response = yield apply(api, api.roomSongs.create, [action.roomId, action.songId, action.order])
   const queue = createQueueDeserializer(response)
   yield put(actions.getQueueOK(action.returnOK, queue))
 }
@@ -19,8 +19,8 @@ function* getSongs(
 ) {
   const api = getSingleton()
 
-  const response = yield apply(api, api.roomQueues.index, [])
-  const songs = queuesDeserializer(response.roomQueues)
+  const response = yield apply(api, api.roomSongs.index, [])
+  const songs = queuesDeserializer(response.roomSongs)
   yield all(songs.map(s => put(actions.getQueueOK(action.returnOK, s))))
 }
 

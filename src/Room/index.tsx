@@ -8,7 +8,7 @@ import { actions as roomActions } from 'models/room'
 import Library from 'Library'
 
 import Player from './components/Player'
-import RoomQueue from './components/RoomQueue'
+import RoomSong from './components/RoomSong'
 import { State, types } from './redux'
 
 const Container = system({
@@ -47,7 +47,7 @@ class Room extends React.Component<Props, {}> {
         </Container>
         <Container>
           <Title>Room Queue</Title>
-          <RoomQueue roomId={id} />
+          <RoomSong roomId={id} />
         </Container>
       </>
     )
