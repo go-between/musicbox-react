@@ -1,6 +1,4 @@
-import { Moment } from 'moment'
 import { Room } from 'models/room'
-import { Song } from 'models/song'
 import { Action as RoomAction } from 'Room/redux/types'
 
 const UPDATE_NOW_PLAYING = 'app/Room/Player/UPDATE_NOW_PLAYING'
@@ -13,10 +11,10 @@ export const types: Types = {
   UPDATE_NOW_PLAYING
 }
 
-type UpdateNowPlaying = (payload: {song: Song, startedAt: Moment}) => {
+type UpdateNowPlaying = (payload: State) => {
   type: typeof UPDATE_NOW_PLAYING
-  song: Song
-  startedAt: Moment
+  currentSong: State['currentSong']
+  currentSongStart: State['currentSongStart']
 }
 
 export type Action =
