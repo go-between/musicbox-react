@@ -15,12 +15,12 @@ export default class Client {
     `)({roomId})
   }
 
-  roomQueues: any = {
+  roomSongs: any = {
     create: (roomId, songId, order) => this.baseClient.mutate(`
       (@autodeclare) {
-        createRoomQueue(input: {roomId: $roomId, songId: $songId, order: $order}) {
-          roomQueue {
-            ...roomQueue
+        createRoomSong(input: {roomId: $roomId, songId: $songId, order: $order}) {
+          roomSong {
+            ...roomSong
           }
           errors
         }
@@ -29,8 +29,8 @@ export default class Client {
 
     index: (roomId) => this.baseClient.mutate(`
       (@autodeclare) {
-        roomQueues(roomId: $roomId) {
-          ...roomQueue
+        roomSongs(roomId: $roomId) {
+          ...roomSong
         }
       }
     `)({roomId}),
@@ -73,7 +73,7 @@ export default class Client {
   private baseClient: any
   private fragments: any = {
     enqueue: 'on Enqueue { order, song { ...song }, user { ...user } }',
-    roomQueue: 'on RoomQueue { id, order, song { ...song }, room { ...room }, user { ...user } }',
+    roomSong: 'on RoomSong { id, order, song { ...song }, room { ...room }, user { ...user } }',
     room: 'on Room { currentSong { ...song }, currentSongStart, id, name, enqueues { ...enqueue }, users { ...user } }',
     song: 'on Song { id, description, durationInSeconds, name, youtubeId }',
     user: 'on User { id, email } ',
