@@ -1,9 +1,9 @@
 import { ActionCreators, types } from './types'
 
-const updateNowPlaying: ActionCreators['UpdateNowPlaying'] = ({song, startedAt}) => ({
+const updateNowPlaying: ActionCreators['UpdateNowPlaying'] = ({ currentSong, currentSongStart }) => ({
   type: types.UPDATE_NOW_PLAYING,
-  song,
-  startedAt,
+  currentSong,
+  currentSongStart,
 })
 
 export default {

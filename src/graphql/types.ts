@@ -1,13 +1,13 @@
-type APIRoom = {
+export type APIRoom = {
   id: string
   name: string
   currentSong: APISong
   currentSongStart: string
-  enqueues: APIRoomQueue[]
+  enqueues: APIRoomSong[]
   users: APIUser[]
 }
 
-type APIRoomQueue = {
+export type APIRoomSong = {
   id: string
   order: number
   room: APIRoom
@@ -15,7 +15,7 @@ type APIRoomQueue = {
   user: APIUser
 }
 
-type APISong = {
+export type APISong = {
   id: string
   description: string
   durationInSeconds: number
@@ -23,14 +23,14 @@ type APISong = {
   youtubeId: string
 }
 
-type APIUser = {
+export type APIUser = {
   id: string
   email: string
 }
 
-export type APICreateRoomQueueResponse = {
-  createRoomQueue: {
-    roomQueue: APIRoomQueue,
+export type APICreateRoomSongResponse = {
+  createRoomSong: {
+    roomSong: APIRoomSong,
     errors: string[]
   }
 }
@@ -56,8 +56,8 @@ export type APIUserResponse = {
   users: APIUser[]
 }
 
-export type APIRoomQueueResponse = {
-  roomQueues: APIRoomQueue[]
+export type APIRoomSongResponse = {
+  roomSongs: APIRoomSong[]
 }
 
 export type Options = {
