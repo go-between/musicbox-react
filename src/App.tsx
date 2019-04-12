@@ -1,18 +1,25 @@
-import * as React from 'react';
-
+import * as React from 'react'
+import { Box } from 'rebass'
 import { Provider } from 'react-redux'
 
 import Router from './Router'
 import { store } from './store'
 
+import TopNavHeader from 'components/top-nav-header'
+
 class App extends React.Component {
   render() {
     return (
-      <Provider store={store}>
-        <Router />
-      </Provider>
+      <>
+        <Provider store={store}>
+          <TopNavHeader title="MusicBox" />
+          <Box px={[4, 5]}>
+            <Router />
+          </Box>
+        </Provider>
+      </>
     )
   }
 }
 
-export default App;
+export default App
