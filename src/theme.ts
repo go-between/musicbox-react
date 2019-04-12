@@ -24,6 +24,10 @@ export default {
   borders: [0, '1px solid', '2px solid'],
   breakpoints: ['960px'],
   colors,
+  fonts: {
+    sans: 'system-ui, sans-serif',
+    mono: 'Menlo, monospace',
+  },
   fontSizes,
   fontWeights: {
     light: 300,
