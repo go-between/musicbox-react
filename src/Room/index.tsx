@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { RouteComponentProps } from 'react-router'
-import system from '@rebass/components'
+import { Box, Heading } from 'rebass'
 
 import { State as RootState } from 'reducers'
 import { actions as roomActions } from 'models/room'
@@ -10,17 +10,6 @@ import Library from 'Library'
 import Player from './components/Player'
 import RoomSong from './components/RoomSong'
 import { State, types } from './redux'
-
-const Container = system({
-  is: 'div',
-  display: ['block', 'flex'],
-  flex: '1',
-}, { margin: 20 })
-
-const Title = system({
-}, {
-  fontWeight: 'bold'
-})
 
 type Props = State & typeof roomActions & RouteComponentProps<{id: string}>
 
@@ -37,18 +26,20 @@ class Room extends React.Component<Props, {}> {
 
     return(
       <>
-        <Container>
-          <Title>Song Library</Title>
+        <Box>
+          <Heading>Song Library</Heading>
           <Library roomId={id} />
-        </Container>
-        <Container>
-          <Title>Song Player</Title>
+        </Box>
+
+        <Box>
+          <Heading>Song Player</Heading>
           <Player roomId={id} />
-        </Container>
-        <Container>
-          <Title>Room Queue</Title>
+        </Box>
+
+        <Box>
+          <Heading>Room Queue</Heading>
           <RoomSong roomId={id} />
-        </Container>
+        </Box>
       </>
     )
   }
