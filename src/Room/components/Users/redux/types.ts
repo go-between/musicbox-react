@@ -1,22 +1,27 @@
-import { GetUserOK, User } from 'models/user'
+import { Room } from 'models/room'
+import { Action as RoomAction } from 'Room/redux/types'
 
-const GET_USER_OK = 'app/Room/GET_USER_OK'
-const GET_USERS_ERR = 'app/Room/GET_USERS_ERR'
+const UPDATE_USERS = 'app/Room/Users/UPDATE_USERS'
 
 type Types = {
-  GET_USER_OK: typeof GET_USER_OK
-  GET_USERS_ERR: typeof GET_USERS_ERR
+  UPDATE_USERS: typeof UPDATE_USERS
 }
 
 export const types: Types = {
-  GET_USER_OK,
-  GET_USERS_ERR,
+  UPDATE_USERS
+}
+
+type UpdateUsers = (payload: State) => {
+  type: typeof UPDATE_USERS
+  users: State['users']
 }
 
 export type Action =
-  | ReturnType<GetUserOK<Types['GET_USER_OK']>>
+  | RoomAction
+  | ReturnType<UpdateUsers>
 
-export type State = {
-  roomId: string | null
-  users: User[]
+export type ActionCreators = {
+  UpdateUsers: UpdateUsers
 }
+
+export type State = Pick<Room, 'users'>
