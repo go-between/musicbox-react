@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
+import ReactPlayer from 'react-player'
 
 import { getSingleton } from 'cable'
 import { State as RootState } from 'reducers'
@@ -21,6 +22,11 @@ class Player extends React.Component<Props, {}> {
     }
 
     return <>
+      <ReactPlayer
+        url={`https://www.youtube.com/watch?v=${currentSong.youtubeId}`}
+        playing={currentSong ? true : false}
+      />
+      current song id: {currentSong.youtubeId}
       current song: {currentSong.name} <br />
       current song start: {currentSongStart.toISOString()}
     </>
