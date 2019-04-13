@@ -9,6 +9,8 @@ import Library from 'Library'
 
 import Player from './components/Player'
 import RoomSong from './components/RoomSong'
+import Users from './components/Users'
+
 import { State, types } from './redux'
 
 const Container = system({
@@ -48,6 +50,10 @@ class Room extends React.Component<Props, {}> {
         <Container>
           <Title>Room Queue</Title>
           <RoomSong roomId={id} />
+        </Container>
+        <Container>
+          <Title>Users</Title>
+          <Users roomId={id} />
         </Container>
       </>
     )

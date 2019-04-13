@@ -12,3 +12,12 @@ export const nowPlayingDeserializer: NowPlayingDeserializer = (message) => {
     currentSongStart: moment(currentSongStart),
   }
 }
+
+export type UsersDeserializer = (
+  message: Pick<APIRoom, 'users'>
+) => Pick<Room, 'users'>
+export const usersDeserializer: UsersDeserializer = (message) => {
+  const { users } = message
+
+  return { users }
+}

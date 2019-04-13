@@ -1,10 +1,12 @@
 // Channels
 export const QUEUES_CHANNEL = 'QueuesChannel'
 export const NOW_PLAYING_CHANNEL = 'NowPlayingChannel'
+export const USERS_CHANNEL = 'UsersChannel'
 
 export type Channel =
   | typeof QUEUES_CHANNEL
   | typeof NOW_PLAYING_CHANNEL
+  | typeof USERS_CHANNEL
 
 export type Identifier = {
   channel: Channel
@@ -26,15 +28,13 @@ export type SystemMessage =
   | Ping
   | ConfirmSubscription
 
-export type SongMessage = {
+export type DataMessage = {
   identifier: Identifier
   message: {
     data: any
   }
   type: undefined
 }
-
-export type DataMessage = SongMessage
 
 export type Message =
   | SystemMessage
@@ -44,6 +44,7 @@ export type Message =
 export type Subscriptions = {
   [QUEUES_CHANNEL]: { room_id: string }
   [NOW_PLAYING_CHANNEL]: { room_id: string }
+  [USERS_CHANNEL]: { room_id: string }
 }
 
 // Utilities
