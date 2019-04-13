@@ -1,15 +1,16 @@
 import * as React from 'react'
-import { Headphones } from 'react-feather'
+import { Headphones, LogOut } from 'react-feather'
 import system from '@rebass/components'
-import { Box } from 'rebass'
+import { Box, Button, Flex } from 'rebass'
 
 const Header = system(
   {
-    is: 'header',
+    as: 'header',
     alignItems: 'center',
     display: 'flex',
     justifyContent: 'space-between',
-    p: [4, 5],
+    py: 3,
+    px: [4, 5],
   },
   'alignItems',
   'color',
@@ -21,10 +22,13 @@ const Header = system(
 
 Header.Logo = system(
   {
-    is: 'a',
+    as: 'a',
     alignItems: 'center',
     color: 'offBlack',
-    display: 'flex'
+    display: 'flex',
+    fontSize: 1,
+    fontWeight: 'bold',
+    textStyle: 'uppercase',
   },
   {
     textDecoration: 'none',
@@ -32,7 +36,25 @@ Header.Logo = system(
   'alignItems',
   'color',
   'display',
+  'fontSize',
+  'fontWeight',
+  'textStyle',
   'space',
+)
+
+Header.LogoIcon = system(
+  {
+    as: Flex,
+    alignItems: 'center',
+    borderRadius: '100%',
+    boxShadow: 1,
+    bg: 'purple',
+    color: 'white',
+    justifyContent: 'center',
+    p: 2,
+  },
+  'borderRadius',
+  'boxShadow',
 )
 
 interface IProps {
@@ -45,13 +67,24 @@ const TopNavHeader: React.SFC<IProps> = ({
   return (
     <Header>
       <Header.Logo href="/">
-        <Headphones/>
+        <Header.LogoIcon>
+          <Headphones size={20} />
+        </Header.LogoIcon>
         <Box mx={2}>{title}</Box>
       </Header.Logo>
 
-      <Box>
-        <button>Logout</button>
-      </Box>
+      <Button
+        bg="white"
+        color="purple"
+        fontSize={2}
+        fontWeight="bold"
+      >
+        <Flex alignItems="center">
+          Logout
+          <Box mx={1} />
+          <LogOut size={14}/>
+        </Flex>
+      </Button>
     </Header>
   )
 }

@@ -1,19 +1,35 @@
 import * as React from 'react';
 import { connect } from 'react-redux'
 import system from '@rebass/components'
+import { themeGet } from 'styled-system'
 import { Box, Flex, Text } from 'rebass'
 import List from '../components/list'
 
 import { State as RootState } from '../reducers'
 import { actions, State } from './redux'
 
-const Input = system({
-  is: 'input',
-})
+const Input = system(
+  {
+    as: 'input',
+    border: '1px solid',
+    borderColor: 'offWhite',
+    borderRadius: 4,
+    boxShadow: 1,
+    p: 2,
+  },
+  'border',
+  'borderColor',
+  'borderRadius',
+  'boxShadow',
+  'color',
+  'maxWidth',
+  'space',
+  'width',
+)
 
 const BgImage = system(
   {
-    is: 'div',
+    as: 'div',
   },
   'backgroundImage',
   'backgroundRepeat',
@@ -22,6 +38,24 @@ const BgImage = system(
   'borderRadius',
   'height',
   'width',
+)
+
+const SearchResult = system(
+  {
+    as: Flex,
+    alignItems: 'center',
+    borderRadius: 6,
+    display: 'flex',
+    p: 3,
+  },
+  props => ({
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: `${themeGet('colors.white')(props)}`,
+      boxShadow: `${themeGet('shadows.1')(props)}`
+    }
+  }),
+  'borderRadius'
 )
 
 type PassedProps = {
@@ -43,16 +77,9 @@ class Room extends React.Component<Props, { createSong: () => void }> {
       console.log('result', result.image)
 
       return (
-        <List.Item
-          key={result.id}
-          mb={4}
-        >
-          <Flex
-            onClick={onClick}
-            alignItems="center"
-            display="flex"
-          >
-            <Box>
+        <List.Item key={result.id}>
+          <SearchResult onClick={onClick}>
+            <Box mr={3}>
               <BgImage
                 backgroundImage={`url(${result.image})`}
                 backgroundSize="cover"
@@ -78,7 +105,7 @@ class Room extends React.Component<Props, { createSong: () => void }> {
                 {result.description}
               </Text>
             </Box>
-          </Flex>
+          </SearchResult>
         </List.Item>
       )
     })
@@ -88,7 +115,7 @@ class Room extends React.Component<Props, { createSong: () => void }> {
           <Input type="search" value={this.props.query} onChange={this.changeQuery}/>
         </Box>
 
-        <List is="ul">
+        <List>
           {searchResults}
         </List>
       </>
