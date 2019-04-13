@@ -23,7 +23,7 @@ const space = [0, 4, 8, 16, 32, 64, 128, 256]
 
 export default {
   borders: [0, '1px solid', '2px solid'],
-  breakpoints: ['960px'],
+  breakpoints: ['800px'],
   colors,
   fonts: {
     sans: 'system-ui, sans-serif',

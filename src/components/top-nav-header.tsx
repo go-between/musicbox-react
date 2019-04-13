@@ -1,7 +1,8 @@
 import * as React from 'react'
-import { Headphones, LogOut } from 'react-feather'
+import { Headphones, User } from 'react-feather'
 import system from '@rebass/components'
-import { Box, Button, Flex } from 'rebass'
+import { Box, Flex } from 'rebass'
+import Icon from './icon'
 
 const Header = system(
   {
@@ -73,18 +74,17 @@ const TopNavHeader: React.SFC<IProps> = ({
         <Box mx={2}>{title}</Box>
       </Header.Logo>
 
-      <Button
-        bg="white"
-        color="purple"
-        fontSize={2}
-        fontWeight="bold"
-      >
-        <Flex alignItems="center">
-          Logout
-          <Box mx={1} />
-          <LogOut size={14}/>
-        </Flex>
-      </Button>
+      <Box>
+        <Icon
+          bg="white"
+          border="2px solid"
+          borderColor="purple"
+          borderRadius="100%"
+          color="purple"
+        >
+          <User size={20} />
+        </Icon>
+      </Box>
     </Header>
   )
 }
