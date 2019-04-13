@@ -13,7 +13,7 @@ class App extends React.Component {
       <>
         <Provider store={store}>
           <TopNavHeader title="MusicBox" />
-          <Box px={[4, 5]}>
+          <Box as="main" p={[4, 5]}>
             <Router />
           </Box>
         </Provider>
