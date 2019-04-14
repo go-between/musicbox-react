@@ -1,9 +1,24 @@
 import { delay, put, takeLatest } from 'redux-saga/effects'
-import searchYoutube, { Options, Results } from 'youtube-api-v3-search'
-import { YOUTUBE_KEY } from '../../lib/constants'
-import { ActionCreators, types } from './types'
+import { YOUTUBE_KEY, YOUTUBE_API } from '../../lib/constants'
+import { ActionCreators, Options, Results, types } from './types'
 import actions from './actions'
 import { youtubeDeserializer } from './deserializers'
+
+function youtubeAPI(options: Options): Promise<Response> {
+  const formData = new URLSearchParams()
+  formData.append('q', options.q)
+  formData.append('part', 'snippet')
+  formData.append('type', 'video')
+  formData.append('key', YOUTUBE_KEY)
+
+  return fetch(`${YOUTUBE_API}?${formData.toString()}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  })
+}
+
 function* querySongs(
   action: ReturnType<ActionCreators['ChangeQuery']>,
 ) {
@@ -12,9 +27,10 @@ function* querySongs(
   const options: Options = {
     q: action.query,
     part: 'snippet',
-    type: 'video',
+    type: 'video'
   }
-  const data = (yield searchYoutube(YOUTUBE_KEY, options)) as Results
+  const response = yield youtubeAPI(options)
+  const data = (yield response.json()) as Results
   const results = data.items.map(youtubeDeserializer)
 
   yield put(actions.getResultsOK(results))
