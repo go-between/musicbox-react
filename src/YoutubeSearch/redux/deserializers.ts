@@ -1,5 +1,4 @@
-import { Result } from 'youtube-api-v3-search'
-import { YoutubeResult } from './types'
+import { Result, YoutubeResult } from './types'
 
 export const youtubeDeserializer = (result: Result): YoutubeResult => ({
   id: result.id.videoId,
