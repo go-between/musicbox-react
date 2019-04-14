@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Route, Switch, withRouter } from 'react-router'
+import { Redirect, Route, Switch, withRouter } from 'react-router'
 import { connect } from 'react-redux'
 
 import { State } from './reducers'
@@ -12,7 +12,8 @@ class Routes extends React.Component<Props> {
     if (!this.props.token) {
       return (
         <Switch>
-          <Route component={Auth} />
+          <Route exact={true} path="/login" component={Auth}/>
+          <Redirect to={{pathname: '/login', state: { redirect: location.pathname }}} />
         </Switch>
       )
     }
