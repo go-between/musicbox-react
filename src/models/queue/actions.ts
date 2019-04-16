@@ -19,18 +19,18 @@ const createQueueERR: ActionCreators['CreateQueueERR'] = (returnERR, error) => (
   error,
 })
 
-const GetQueues: ActionCreators['GetQueues'] = (returnOK, returnERR) => ({
+const getUserQueue: ActionCreators['GetUserQueue'] = (returnOK, returnERR) => ({
   type: types.GET_QUEUES,
   returnOK,
   returnERR,
 })
 
-const getQueueOK: ActionCreators['GetQueueOK'] = (returnOK, queue) => ({
+const getUserQueueOK: ActionCreators['GetUserQueueOK'] = (returnOK, queue) => ({
   type: returnOK,
   queue,
 })
 
-const GetQueuesERR: ActionCreators['GetQueuesERR'] = (returnERR, error) => ({
+const getUserQueueERR: ActionCreators['GetUserQueueERR'] = (returnERR, error) => ({
   type: returnERR,
   error,
 })
@@ -39,7 +39,7 @@ export default {
   createQueue,
   createQueueOK,
   createQueueERR,
-  GetQueues,
-  getQueueOK,
-  GetQueuesERR,
+  getUserQueue,
+  getUserQueueOK,
+  getUserQueueERR,
 }
