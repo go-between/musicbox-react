@@ -36,18 +36,18 @@ export type CreateQueueERR<T> = (type: T, error: Error) => {
   error: Error,
 }
 
-type GetQueues = <OK, ERR>(returnOK: OK, returnERR: ERR) => {
+type GetUserQueue = <OK, ERR>(returnOK: OK, returnERR: ERR) => {
   type: typeof GET_QUEUES,
   returnOK: OK,
   returnERR: ERR,
 }
 
-export type GetQueueOK<T> = (type: T, queue: Queue) => {
+export type GetUserQueueOK<T> = (type: T, queue: Queue[]) => {
   type: T,
-  queue: Queue,
+  queue: Queue[],
 }
 
-export type GetQueuesERR<T> = (type: T, error: Error) => {
+export type GetUserQueueERR<T> = (type: T, error: Error) => {
   type: T,
   error: Error,
 }
@@ -56,9 +56,9 @@ export type ActionCreators = {
   CreateQueue: CreateQueue
   CreateQueueOK: CreateQueueOK<any>
   CreateQueueERR: CreateQueueERR<any>
-  GetQueues: GetQueues,
-  GetQueueOK: GetQueueOK<any>
-  GetQueuesERR: GetQueuesERR<any>
+  GetUserQueue: GetUserQueue,
+  GetUserQueueOK: GetUserQueueOK<any>
+  GetUserQueueERR: GetUserQueueERR<any>
 }
 
 export type Queue = {
