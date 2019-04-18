@@ -49,7 +49,7 @@ class Client {
       this.log('subscription', channels.NOW_PLAYING_CHANNEL, component, callback)
       this.subscriptions[channels.NOW_PLAYING_CHANNEL][component] = callback
     },
-    roomSong: (roomId: string, callback: Callback<QueueDeserializer>) => {
+    roomSong: (roomId: string, callback: Callback<Array<ReturnType<QueueDeserializer>>>) => {
       this.send(this.generateSubscription(channels.QUEUES_CHANNEL, { room_id: roomId }))
       this.log('subscription', channels.QUEUES_CHANNEL, component, callback)
       this.subscriptions[channels.QUEUES_CHANNEL][component] = callback
