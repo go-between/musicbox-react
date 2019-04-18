@@ -1,6 +1,6 @@
 import moment from 'moment'
 import { APIRoom } from '../../graphql'
-import { queuesDeserializer } from '../queue'
+import { queueDeserializer } from '../queue'
 import { Room } from './types'
 
 export const roomDeserializer = (response: APIRoom): Room => {
@@ -10,7 +10,7 @@ export const roomDeserializer = (response: APIRoom): Room => {
     currentSongStart: moment(currentSongStart),
     id,
     name,
-    queue: queuesDeserializer(enqueues),
+    queue: enqueues.map(queueDeserializer),
     users,
   }
 }
