@@ -1,3 +1,5 @@
+import { APIRoom, APIRoomSong } from 'graphql'
+
 // Channels
 export const QUEUES_CHANNEL = 'QueuesChannel'
 export const NOW_PLAYING_CHANNEL = 'NowPlayingChannel'
@@ -8,33 +10,49 @@ export type Channel =
   | typeof NOW_PLAYING_CHANNEL
   | typeof USERS_CHANNEL
 
-export type Identifier = {
-  channel: Channel
+export type Channels = {
+  QUEUES_CHANNEL: typeof QUEUES_CHANNEL
+  NOW_PLAYING_CHANNEL: typeof NOW_PLAYING_CHANNEL
+  USERS_CHANNEL: typeof USERS_CHANNEL
 }
 
-export type Ping = {
+export const channels: Channels = {
+  QUEUES_CHANNEL,
+  NOW_PLAYING_CHANNEL,
+  USERS_CHANNEL,
+}
+
+type Ping = {
   identifier: undefined
   message: number
   type: 'ping'
 }
 
 // Message Types
-export type ConfirmSubscription = {
-  identifier: Identifier
+type ConfirmSubscription = {
+  identifier: { channel: Channel }
   type: 'confirm_subscription'
 }
 
-export type SystemMessage =
+type SystemMessage =
   | Ping
   | ConfirmSubscription
 
-export type DataMessage = {
-  identifier: Identifier
+type WebsocketMessage<T, K> = {
+  messageType: T
+  identifier: {
+    channel: T
+  }
   message: {
-    data: any
+    data: K
   }
   type: undefined
 }
+
+export type DataMessage =
+  | WebsocketMessage<typeof NOW_PLAYING_CHANNEL, { room: Pick<APIRoom, 'currentSong' | 'currentSongStart'> }>
+  | WebsocketMessage<typeof QUEUES_CHANNEL, { roomSongs: APIRoomSong[] }>
+  | WebsocketMessage<typeof USERS_CHANNEL, { room: Pick<APIRoom, 'users'> }>
 
 export type Message =
   | SystemMessage
