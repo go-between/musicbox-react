@@ -32,7 +32,7 @@ type Props = State & PassedProps & typeof queueActions
 
 class UserSong extends React.Component<Props, {}> {
   componentDidMount() {
-    this.props.getQueues(types.GET_QUEUE_OK, types.GET_QUEUE_ERR)
+    this.props.getUserQueue(types.GET_USER_QUEUE_OK, types.GET_USER_QUEUE_ERR)
   }
 
   renderSongs = () => {
