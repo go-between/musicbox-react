@@ -3,6 +3,14 @@ import { Options } from './types'
 
 export default class Client {
   rooms: any = {
+    index: () => this.baseClient.query(`
+      {
+        rooms {
+          ...room
+        }
+      }
+    `)(),
+
     joinRoom: (roomId) => this.baseClient.mutate(`
       (@autodeclare) {
         joinRoom(input: {roomId: $roomId}) {
