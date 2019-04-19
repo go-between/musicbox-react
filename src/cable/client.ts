@@ -1,10 +1,18 @@
-import { NowPlayingDeserializer, nowPlayingDeserializer, UsersDeserializer, usersDeserializer } from './deserializers'
 import {
+  NowPlayingDeserializer, nowPlayingDeserializer,
+  QueueDeserializer, queueDeserializer,
+  UsersDeserializer, usersDeserializer
+} from './deserializers'
+import {
+  channels,
   Action,
   Callback,
   Channel,
-  DataMessage, Message, NOW_PLAYING_CHANNEL, Options, QUEUES_CHANNEL, Subscriptions, USERS_CHANNEL } from './types'
-import { Queue, queuesDeserializer } from 'models/queue'
+  DataMessage,
+  Message,
+  Options,
+  Subscriptions,
+} from './types'
 
 class Client {
   private debug: boolean
@@ -37,19 +45,19 @@ class Client {
 
   public subscribeTo = (component: string) => ({
     nowPlaying: (roomId: string, callback: Callback<ReturnType<NowPlayingDeserializer>>) => {
-      this.send(this.generateSubscription(NOW_PLAYING_CHANNEL, { room_id: roomId }))
-      this.log('subscription', NOW_PLAYING_CHANNEL, component, callback)
-      this.subscriptions[NOW_PLAYING_CHANNEL][component] = callback
+      this.send(this.generateSubscription(channels.NOW_PLAYING_CHANNEL, { room_id: roomId }))
+      this.log('subscription', channels.NOW_PLAYING_CHANNEL, component, callback)
+      this.subscriptions[channels.NOW_PLAYING_CHANNEL][component] = callback
     },
-    roomSong: (roomId: string, callback: Callback<Queue[]>) => {
-      this.send(this.generateSubscription(QUEUES_CHANNEL, { room_id: roomId }))
-      this.log('subscription', QUEUES_CHANNEL, component, callback)
-      this.subscriptions[QUEUES_CHANNEL][component] = callback
+    roomSong: (roomId: string, callback: Callback<Array<ReturnType<QueueDeserializer>>>) => {
+      this.send(this.generateSubscription(channels.QUEUES_CHANNEL, { room_id: roomId }))
+      this.log('subscription', channels.QUEUES_CHANNEL, component, callback)
+      this.subscriptions[channels.QUEUES_CHANNEL][component] = callback
     },
     users: (roomId: string, callback: Callback<ReturnType<UsersDeserializer>>) => {
-      this.send(this.generateSubscription(USERS_CHANNEL, { room_id: roomId }))
-      this.log('subscription', USERS_CHANNEL, component, callback)
-      this.subscriptions[USERS_CHANNEL][component] = callback
+      this.send(this.generateSubscription(channels.USERS_CHANNEL, { room_id: roomId }))
+      this.log('subscription', channels.USERS_CHANNEL, component, callback)
+      this.subscriptions[channels.USERS_CHANNEL][component] = callback
     }
   })
 
@@ -70,19 +78,19 @@ class Client {
     }
   }
 
-  private notify: (data: DataMessage) => Action[] = (data) => {
-    this.log(data)
+  private notify: (websocketMessage: DataMessage) => Action[] = (websocketMessage) => {
+    this.log(websocketMessage)
 
-    switch (data.identifier.channel) {
-      case 'QueuesChannel':
-        const queues = queuesDeserializer(data.message.data.roomSongs)
-        return Object.values(this.subscriptions[data.identifier.channel]).map((c) => c(queues))
-      case 'NowPlayingChannel':
-        const nowPlaying = nowPlayingDeserializer(data.message.data.room)
-        return Object.values(this.subscriptions[data.identifier.channel]).map((c) => c(nowPlaying))
-      case 'UsersChannel':
-        const users = usersDeserializer(data.message.data.room)
-        return Object.values(this.subscriptions[data.identifier.channel]).map((c) => c(users))
+    switch (websocketMessage.messageType) {
+      case channels.QUEUES_CHANNEL:
+        const queues = websocketMessage.message.data.roomSongs.map(queueDeserializer)
+        return Object.values(this.subscriptions[websocketMessage.identifier.channel]).map((c) => c(queues))
+      case channels.NOW_PLAYING_CHANNEL:
+        const nowPlaying = nowPlayingDeserializer(websocketMessage.message.data.room)
+        return Object.values(this.subscriptions[websocketMessage.identifier.channel]).map((c) => c(nowPlaying))
+      case channels.USERS_CHANNEL:
+        const users = usersDeserializer(websocketMessage.message.data.room)
+        return Object.values(this.subscriptions[websocketMessage.identifier.channel]).map((c) => c(users))
     }
     return []
   }
@@ -103,7 +111,10 @@ class Client {
         return
       case undefined:
         this.log('notify', parsedData)
-        return this.notify(parsedData)
+        // We must lift the channel identifier to the top-level of this
+        // object in order to typehint in #notify successfully
+        this.notify({ messageType: parsedData.identifier.channel, ...parsedData })
+        return
     }
   }
 

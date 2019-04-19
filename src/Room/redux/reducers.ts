@@ -3,6 +3,7 @@ import { combineReducers } from 'redux'
 import { reducer as playerReducer } from '../components/Player/redux'
 import { reducer as roomSongReducer } from '../components/RoomSong/redux'
 import { reducer as usersReducer } from '../components/Users/redux'
+import { reducer as userSongReducer } from '../components/UserSong/redux'
 import { Action, types, State } from './types'
 
 export const initialState: State['base'] = {
@@ -24,4 +25,5 @@ export default combineReducers({
   player: playerReducer,
   roomSong: roomSongReducer,
   users: usersReducer,
+  userSong: userSongReducer,
 })

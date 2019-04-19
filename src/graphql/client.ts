@@ -35,13 +35,13 @@ export default class Client {
       }
     `)({roomId, songId, order}),
 
-    index: (roomId) => this.baseClient.mutate(`
+    index: (roomId, forUser) => this.baseClient.query(`
       (@autodeclare) {
-        roomSongs(roomId: $roomId) {
+        roomSongs(roomId: $roomId, forUser: $forUser) {
           ...roomSong
         }
       }
-    `)({roomId}),
+    `)({roomId, forUser}),
   }
 
   songs: any = {
