@@ -25,11 +25,10 @@ export const usersDeserializer: UsersDeserializer = (message) => {
 
 export type QueueDeserializer = (message: APIRoomSong) => Queue
 export const queueDeserializer: QueueDeserializer = (message) => {
-  const  { id, order, song, user } = message
+  const  { id, song, user } = message
   return {
     id,
     songId: song.id,
-    order,
     name: song.name,
     user: user.email,
   }

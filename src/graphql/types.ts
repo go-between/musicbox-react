@@ -9,7 +9,6 @@ export type APIRoom = {
 
 export type APIRoomSong = {
   id: string
-  order: number
   room: APIRoom
   song: APISong
   user: APIUser
