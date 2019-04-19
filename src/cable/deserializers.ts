@@ -1,5 +1,6 @@
 import moment from 'moment'
-import { APIRoom } from 'graphql'
+import { APIRoom, APIRoomSong } from 'graphql'
+import { Queue } from 'models/queue'
 import { Room } from 'models/room'
 
 export type NowPlayingDeserializer = (
@@ -20,4 +21,16 @@ export const usersDeserializer: UsersDeserializer = (message) => {
   const { users } = message
 
   return { users }
+}
+
+export type QueueDeserializer = (message: APIRoomSong) => Queue
+export const queueDeserializer: QueueDeserializer = (message) => {
+  const  { id, order, song, user } = message
+  return {
+    id,
+    songId: song.id,
+    order,
+    name: song.name,
+    user: user.email,
+  }
 }
