@@ -20,8 +20,9 @@ type ChangeField = <
   value: Value
 }
 
-type SignIn = () => {
+type SignIn = (redirect: string) => {
   type: typeof types.SIGN_IN
+  redirect: string
 }
 
 export type Action =

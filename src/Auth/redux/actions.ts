@@ -6,8 +6,9 @@ const changeField: ActionCreators['ChangeField'] = (key, value) => ({
   value,
 })
 
-const signIn: ActionCreators['SignIn'] = () => ({
+const signIn: ActionCreators['SignIn'] = (redirect) => ({
   type: types.SIGN_IN,
+  redirect,
 })
 
 export default {

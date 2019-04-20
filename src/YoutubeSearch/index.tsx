@@ -4,6 +4,7 @@ import system from '@rebass/components'
 import { themeGet } from 'styled-system'
 import { Box, Flex, Text } from 'rebass'
 import List from '../components/list'
+import BgImage from '../components/bg-image'
 
 import { State as RootState } from '../reducers'
 import { actions, State } from './redux'
@@ -24,19 +25,6 @@ const Input = system(
   'color',
   'maxWidth',
   'space',
-  'width',
-)
-
-const BgImage = system(
-  {
-    as: 'div',
-  },
-  'backgroundImage',
-  'backgroundRepeat',
-  'backgroundPosition',
-  'backgroundSize',
-  'borderRadius',
-  'height',
   'width',
 )
 
@@ -74,7 +62,6 @@ class Room extends React.Component<Props, { createSong: () => void }> {
     } = this.props
     const searchResults = results.map(result => {
       const onClick = () => this.props.createSong(result.id)
-      console.log('result', result.image)
 
       return (
         <List.Item key={result.id}>
@@ -84,8 +71,8 @@ class Room extends React.Component<Props, { createSong: () => void }> {
                 backgroundImage={`url(${result.image})`}
                 backgroundSize="cover"
                 borderRadius={4}
-                height="80px"
-                width="80px"
+                height="60px"
+                width="60px"
               />
             </Box>
 

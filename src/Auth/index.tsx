@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux'
 import { Box, Button, Card } from 'rebass'
+import { RouteComponentProps } from 'react-router'
 import Input from '../components/input'
 import Label from '../components/label'
 import Section from '../components/section'
@@ -9,7 +10,7 @@ import Wrapper from '../components/wrapper'
 import { State as RootState } from '../reducers'
 import { actions, State } from './redux'
 
-type Props = State & typeof actions
+type Props = State & typeof actions & RouteComponentProps<{state: string}>
 
 class Room extends React.Component<Props, {}> {
   changeField = (field: keyof State) => (event: React.FormEvent<HTMLInputElement>) => {
@@ -24,6 +25,10 @@ class Room extends React.Component<Props, {}> {
     return <Box>
       Error:  {this.props.error}
     </Box>
+  }
+
+  signIn = () => {
+    this.props.signIn(this.props.location.state.redirect)
   }
 
   render() {
@@ -52,7 +57,7 @@ class Room extends React.Component<Props, {}> {
                   bg="purple"
                   color="white"
                   fontSize={2}
-                  onClick={this.props.signIn}
+                  onClick={this.signIn}
                 >
                   Sign In
                 </Button>

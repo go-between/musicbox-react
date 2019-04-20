@@ -6,6 +6,7 @@ import Router from './Router'
 import { store } from './store'
 
 import TopNavHeader from 'components/top-nav-header'
+import Footer from 'components/main-footer'
 
 class App extends React.Component {
   render() {
@@ -16,6 +17,7 @@ class App extends React.Component {
           <Box as="main" p={[4, 5]}>
             <Router />
           </Box>
+          <Footer title="footer" />
         </Provider>
       </>
     )
