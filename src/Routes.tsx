@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import { State } from './reducers'
 import Auth from './Auth'
+import Lobby from './Lobby'
 import Room from './Room'
 
 type Props = State['auth']
@@ -20,6 +21,11 @@ class Routes extends React.Component<Props> {
 
     return (
       <Switch>
+        <Route
+          exact={true}
+          path="/lobby"
+          component={Lobby}
+        />
         <Route
           exact={true}
           path="/room/:id"

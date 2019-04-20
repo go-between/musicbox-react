@@ -3,6 +3,14 @@ import { Options } from './types'
 
 export default class Client {
   rooms: any = {
+    index: () => this.baseClient.query(`
+      {
+        rooms {
+          ...room
+        }
+      }
+    `)(),
+
     joinRoom: (roomId) => this.baseClient.mutate(`
       (@autodeclare) {
         joinRoom(input: {roomId: $roomId}) {
@@ -27,13 +35,13 @@ export default class Client {
       }
     `)({roomId, songId, order}),
 
-    index: (roomId) => this.baseClient.mutate(`
+    index: (roomId, forUser) => this.baseClient.query(`
       (@autodeclare) {
-        roomSongs(roomId: $roomId) {
+        roomSongs(roomId: $roomId, forUser: $forUser) {
           ...roomSong
         }
       }
-    `)({roomId}),
+    `)({roomId, forUser}),
   }
 
   songs: any = {
