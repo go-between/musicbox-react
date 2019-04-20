@@ -6,11 +6,11 @@ import system from '@rebass/components'
 
 import { State as RootState } from 'reducers'
 import { actions as roomActions } from 'models/room'
-import Library from 'Library'
 
 import Player from './components/Player'
 import RoomSong from './components/RoomSong'
 import Users from './components/Users'
+import UserSong from './components/UserSong'
 
 import { State, types } from './redux'
 import Grid from '../components/grid'
@@ -53,7 +53,7 @@ class Room extends React.Component<Props, {}> {
           <Grid.Column flex="0 0 25%" mx={2}>
             <Box>
               <Heading>Song Library</Heading>
-              <Library roomId={id} />
+              <UserSong roomId={id} />
             </Box>
           </Grid.Column>
 
