@@ -28,10 +28,6 @@ class Room extends React.Component<Props, {}> {
     this.props.createSong(youtubeId, types.GET_SONG_OK, '')
   }
 
-  addSongToQueue = (order: number, roomId: string, songId: string) => {
-    this.props.createQueue(roomId, songId, order, '', '')
-  }
-
   renderSongs = () => {
     const { songs } = this.props
     if (songs.length === 0) {
@@ -39,8 +35,7 @@ class Room extends React.Component<Props, {}> {
     }
 
     const songList = songs.map(s => {
-      const onClick = () => this.addSongToQueue(1, this.props.roomId, s.id)
-      return <SongItem key={s.id} onClick={onClick}>{s.name}</SongItem>
+      return <SongItem key={s.id}>{s.name}</SongItem>
     })
 
     return <>
