@@ -10,13 +10,18 @@ import Library from 'Library'
 
 import Player from './components/Player'
 import RoomSong from './components/RoomSong'
+import Users from './components/Users'
+
 import { State, types } from './redux'
 import Grid from '../components/grid'
 
 const ChatPanel = system(
   {
     bg: 'white',
-    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    flex: 1,
+    maxHeight: '100%',
     boxShadow: 1,
     p: 2,
   },
@@ -67,6 +72,7 @@ class Room extends React.Component<Props, {}> {
           <Grid.Column flex="0 0 25%" mx={2}>
             <ChatPanel>
               <Heading>Chat</Heading>
+              <Users roomId={id} />
             </ChatPanel>
           </Grid.Column>
         </Grid.Body>

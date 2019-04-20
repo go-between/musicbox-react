@@ -1,11 +1,10 @@
-import { NowPlayingDeserializer, nowPlayingDeserializer } from './deserializers'
+import { NowPlayingDeserializer, nowPlayingDeserializer, UsersDeserializer, usersDeserializer } from './deserializers'
 import {
   Action,
   Callback,
   Channel,
-  DataMessage, Message, NOW_PLAYING_CHANNEL, Options, QUEUES_CHANNEL, Subscriptions } from './types'
+  DataMessage, Message, NOW_PLAYING_CHANNEL, Options, QUEUES_CHANNEL, Subscriptions, USERS_CHANNEL } from './types'
 import { Queue, queuesDeserializer } from 'models/queue'
-// import { Room } from 'models/room'
 
 class Client {
   private debug: boolean
@@ -17,7 +16,8 @@ class Client {
     this.debug = debug
     this.subscriptions = {
       QueuesChannel: {},
-      NowPlayingChannel: {}
+      NowPlayingChannel: {},
+      UsersChannel: {}
     }
   }
 
@@ -45,6 +45,11 @@ class Client {
       this.send(this.generateSubscription(QUEUES_CHANNEL, { room_id: roomId }))
       this.log('subscription', QUEUES_CHANNEL, component, callback)
       this.subscriptions[QUEUES_CHANNEL][component] = callback
+    },
+    users: (roomId: string, callback: Callback<ReturnType<UsersDeserializer>>) => {
+      this.send(this.generateSubscription(USERS_CHANNEL, { room_id: roomId }))
+      this.log('subscription', USERS_CHANNEL, component, callback)
+      this.subscriptions[USERS_CHANNEL][component] = callback
     }
   })
 
@@ -75,6 +80,9 @@ class Client {
       case 'NowPlayingChannel':
         const nowPlaying = nowPlayingDeserializer(data.message.data.room)
         return Object.values(this.subscriptions[data.identifier.channel]).map((c) => c(nowPlaying))
+      case 'UsersChannel':
+        const users = usersDeserializer(data.message.data.room)
+        return Object.values(this.subscriptions[data.identifier.channel]).map((c) => c(users))
     }
     return []
   }
