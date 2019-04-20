@@ -3,6 +3,7 @@ import { getSingleton, setupSingleton } from '../../graphql'
 import { State as RootState } from '../../reducers'
 import actions from './actions'
 import { ActionCreators, types } from './types'
+import { history } from 'store'
 
 function* signIn(action: ReturnType<ActionCreators['SignIn']>) {
   const { email, password } = yield select((state: RootState) => state.auth)
@@ -27,7 +28,10 @@ function* signIn(action: ReturnType<ActionCreators['SignIn']>) {
     const body = yield response.json()
     const graphClient = getSingleton()
     setupSingleton(graphClient.host, body.access_token, graphClient.options)
+
     yield put(actions.changeField('token', body.access_token))
+    yield history.push(action.redirect)
+    yield window.location.reload()
   }
 }
 
