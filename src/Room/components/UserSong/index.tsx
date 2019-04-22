@@ -44,6 +44,7 @@ class UserSong extends React.Component<Props, {}> {
       song
     }))
     this.props.enqueueSongs(enqueues)
+    this.props.updateQueue()
   }
 
   renderSongs = () => {

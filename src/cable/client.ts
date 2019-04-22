@@ -113,8 +113,7 @@ class Client {
         this.log('notify', parsedData)
         // We must lift the channel identifier to the top-level of this
         // object in order to typehint in #notify successfully
-        this.notify({ messageType: parsedData.identifier.channel, ...parsedData })
-        return
+        return this.notify({ messageType: parsedData.identifier.channel, ...parsedData })
     }
   }
 
