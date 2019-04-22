@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux'
+import { Box, Button, Card } from 'rebass'
 import { RouteComponentProps } from 'react-router'
-import { Box, Button, Card, Heading } from 'rebass'
 import Input from '../components/input'
 import Label from '../components/label'
 import Section from '../components/section'
@@ -36,14 +36,11 @@ class Room extends React.Component<Props, {}> {
       <>
         <Section bg="offWhite">
           <Wrapper maxWidth="400px">
-            <Box is="header" textAlign="center" mb={3} bg="red">
-              <Heading is="h1" fontSize={6} >Music Box</Heading>
-            </Box>
-
             <Card
               bg="white"
               boxShadow="0 2px 6px 0 hsla(0,0%,0%,0.2)"
-              p={4}
+              px={[3, 4]}
+              py={4}
             >
               <Box mb={3}>
                 <Label>Email</Label>
@@ -57,8 +54,9 @@ class Room extends React.Component<Props, {}> {
 
               <Box mb={3}>
                 <Button
-                  bg="blue"
+                  bg="purple"
                   color="white"
+                  fontSize={2}
                   onClick={this.signIn}
                 >
                   Sign In
