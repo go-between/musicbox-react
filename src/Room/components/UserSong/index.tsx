@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import system from '@rebass/components'
-import { uuidv4 } from 'uuid'
+import uuid from 'uuid/v4'
 
 import { actions as queueActions } from 'models/queue'
 import { Song } from 'models/song'
@@ -40,7 +40,7 @@ class UserSong extends React.Component<Props, {}> {
 
   enqueueSongs = (songs: Song[]) => {
     const enqueues = songs.map(song => ({
-      id: uuidv4(),
+      id: uuid(),
       song
     }))
     this.props.enqueueSongs(enqueues)
