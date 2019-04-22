@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { RouteComponentProps } from 'react-router'
+import { Box, Heading } from 'rebass'
 import system from '@rebass/components'
 
 import { State as RootState } from 'reducers'
@@ -12,17 +13,23 @@ import Users from './components/Users'
 import UserSong from './components/UserSong'
 
 import { State, types } from './redux'
+import Grid from '../components/grid'
 
-const Container = system({
-  is: 'div',
-  display: ['block', 'flex'],
-  flex: '1',
-}, { margin: 20 })
-
-const Title = system({
-}, {
-  fontWeight: 'bold'
-})
+const ChatPanel = system(
+  {
+    bg: 'white',
+    display: 'flex',
+    flexDirection: 'column',
+    flex: 1,
+    maxHeight: '100%',
+    boxShadow: 1,
+    p: 2,
+  },
+  'boxShadow',
+  'color',
+  'height',
+  'space',
+)
 
 type Props = State & typeof roomActions & RouteComponentProps<{id: string}>
 
@@ -38,24 +45,38 @@ class Room extends React.Component<Props, {}> {
     }
 
     return(
-      <>
-        <Container>
-          <Title>Songs</Title>
-          <UserSong roomId={id} />
-        </Container>
-        <Container>
-          <Title>Song Player</Title>
-          <Player roomId={id} />
-        </Container>
-        <Container>
-          <Title>Room Queue</Title>
-          <RoomSong roomId={id} />
-        </Container>
-        <Container>
-          <Title>Users</Title>
-          <Users roomId={id} />
-        </Container>
-      </>
+      <Grid
+        flexDirection="column"
+        minHeight="100vh"
+      >
+        <Grid.Body>
+          <Grid.Column flex="0 0 25%" mx={2}>
+            <Box>
+              <Heading>Song Library</Heading>
+              <UserSong roomId={id} />
+            </Box>
+          </Grid.Column>
+
+          <Grid.Column flex="1" mx={2} order={[-1, 0]}>
+            <Box>
+              <Heading>Song Player</Heading>
+              <Player roomId={id} />
+            </Box>
+
+            <Box>
+              <Heading>Room Queue</Heading>
+              <RoomSong roomId={id} />
+            </Box>
+          </Grid.Column>
+
+          <Grid.Column flex="0 0 25%" mx={2}>
+            <ChatPanel>
+              <Heading>Chat</Heading>
+              <Users roomId={id} />
+            </ChatPanel>
+          </Grid.Column>
+        </Grid.Body>
+      </Grid>
     )
   }
 }

@@ -1,13 +1,51 @@
 import * as React from 'react';
 import { connect } from 'react-redux'
 import system from '@rebass/components'
+import { themeGet } from 'styled-system'
+import { Box, Flex, Text } from 'rebass'
+import List from '../components/list'
+import BgImage from '../components/bg-image'
 
 import { State as RootState } from '../reducers'
 import { actions, State } from './redux'
 
-const Input = system({
-  is: 'input',
-})
+const Input = system(
+  {
+    as: 'input',
+    border: '1px solid',
+    borderColor: 'offWhite',
+    borderRadius: 4,
+    boxShadow: 1,
+    p: 2,
+  },
+  'border',
+  'borderColor',
+  'borderRadius',
+  'boxShadow',
+  'color',
+  'maxWidth',
+  'space',
+  'width',
+)
+
+const SearchResult = system(
+  {
+    as: Flex,
+    alignItems: 'center',
+    borderRadius: 6,
+    display: 'flex',
+    p: 3,
+  },
+  props => ({
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: `${themeGet('colors.white')(props)}`,
+      boxShadow: `${themeGet('shadows.1')(props)}`
+    }
+  }),
+  'borderRadius'
+)
+
 type PassedProps = {
   createSong: (youtubeId: string) => void
 }
@@ -26,20 +64,47 @@ class Room extends React.Component<Props, { createSong: () => void }> {
       const onClick = () => this.props.createSong(result.id)
 
       return (
-        <li key={result.id}>
-          <div onClick={onClick}>
-            {result.title} - {result.description}
-            <img src={result.image} />
-          </div>
-        </li>
+        <List.Item key={result.id}>
+          <SearchResult onClick={onClick}>
+            <Box mr={3}>
+              <BgImage
+                backgroundImage={`url(${result.image})`}
+                backgroundSize="cover"
+                borderRadius={4}
+                height="60px"
+                width="60px"
+              />
+            </Box>
+
+            <Box>
+              <Text
+                color="offBlack"
+                fontSize={3}
+                fontWeight="bold"
+              >
+                {result.title}
+              </Text>
+
+              <Text
+                color="grayDark"
+                fontSize={3}
+              >
+                {result.description}
+              </Text>
+            </Box>
+          </SearchResult>
+        </List.Item>
       )
     })
     return(
       <>
-        <Input type="search" value={this.props.query} onChange={this.changeQuery}/>
-        <ul>
+        <Box my={3}>
+          <Input type="search" value={this.props.query} onChange={this.changeQuery}/>
+        </Box>
+
+        <List>
           {searchResults}
-        </ul>
+        </List>
       </>
     )
   }

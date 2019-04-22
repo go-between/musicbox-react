@@ -8,6 +8,7 @@ const colors = {
   grayDark: '#666666',
   offBlack: '#484848',
   offWhite: '#f7f7f7',
+  purple: '#5E50B5',
   red: '#c34848',
   redDark: '#9c292d',
   redLight: '#f7e2e2',
@@ -22,8 +23,12 @@ const space = [0, 4, 8, 16, 32, 64, 128, 256]
 
 export default {
   borders: [0, '1px solid', '2px solid'],
-  breakpoints: ['960px'],
+  breakpoints: ['800px'],
   colors,
+  fonts: {
+    sans: 'system-ui, sans-serif',
+    mono: 'Menlo, monospace',
+  },
   fontSizes,
   fontWeights: {
     light: 300,
@@ -34,9 +39,7 @@ export default {
   listTypes: ['none', 'disc'],
   shadows: [
     'none',
-    `inset 0 0 0 1px ${colors.grayLight}`,
-    `inset 0 0 0 1px ${colors.grayLight}, 0 0 4px ${colors.gray}`,
-    `0 2px 6px 0 hsla(0,0%,0%,0.2)`,
+    '0 2px 4px 0 hsla(0, 0%, 0%, 0.2)',
   ],
   space,
   textColor: colors.offBlack,
