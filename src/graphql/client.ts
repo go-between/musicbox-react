@@ -6,9 +6,10 @@ type Rooms = {
   joinRoom: (roomId: string) => Promise<Types.APIJoinRoomResponse>
 }
 
+type OrderedSong = { songId: string; roomSongId: string }
 type RoomSongs = {
   index: (roomId: string, forUser: boolean) => Promise<Types.APIRoomSongResponse>
-  orderRoomSongs: (roomId: string, orderedSongs: Array<{songId: string, roomSongId: string}>) => Promise<Types.APIOrderRoomSongsResponse>
+  orderRoomSongs: (roomId: string, orderedSongs: OrderedSong[]) => Promise<Types.APIOrderRoomSongsResponse>
 }
 
 type Songs = {
@@ -32,7 +33,7 @@ export default class Client {
 
     joinRoom: (roomId) => this.baseClient.mutate(`
       (@autodeclare) {
-        joinRoom(input: {roomId: $roomId}) {
+        joinRoom(input: { roomId: $roomId }) {
           room {
             ...room
           }
@@ -52,6 +53,14 @@ export default class Client {
     `)({roomId, forUser}),
 
     orderRoomSongs: (roomId, orderedSongs) => this.baseClient.mutate(`
+      ($roomId: ID!, $orderedSongs: [OrderedSongObject!]!) {
+        orderRoomSongs(input: {
+          roomId: $roomId
+          orderedSongs: $orderedSongs
+        }) {
+          errors
+        }
+      }
     `)({ roomId, orderedSongs })
   }
 
@@ -91,8 +100,8 @@ export default class Client {
 
   private baseClient: any
   private fragments: any = {
-    enqueue: 'on Enqueue { order, song { ...song }, user { ...user } }',
-    roomSong: 'on RoomSong { id, order, song { ...song }, room { ...room }, user { ...user } }',
+    enqueue: 'on Enqueue { id, song { ...song }, user { ...user } }',
+    roomSong: 'on RoomSong { id, song { ...song }, room { ...room }, user { ...user } }',
     room: 'on Room { currentSong { ...song }, currentSongStart, id, name, enqueues { ...enqueue }, users { ...user } }',
     song: 'on Song { id, description, durationInSeconds, name, youtubeId }',
     user: 'on User { id, email } ',

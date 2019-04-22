@@ -61,7 +61,6 @@ export type APIRoomSongResponse = {
   roomSongs: APIRoomSong[]
 }
 
-
 export type APISongResponse = {
   songs: APISong[]
 }
