@@ -1,3 +1,5 @@
+import { Song } from 'models/song'
+import { User } from 'models/user'
 const CREATE_QUEUE = 'models/queue/CREATE_QUEUE'
 const GET_USER_QUEUE = 'models/queue/GET_USER_QUEUE'
 
@@ -35,8 +37,6 @@ export type ActionCreators = {
 
 export type Queue = {
   id: string
-  songId: string
-  roomId?: string
-  name: string
-  user: string
+  song: Song
+  user: User
 }
