@@ -28,8 +28,7 @@ export const queueDeserializer: QueueDeserializer = (message) => {
   const  { id, song, user } = message
   return {
     id,
-    songId: song.id,
-    name: song.name,
-    user: user.email,
+    song,
+    user,
   }
 }
