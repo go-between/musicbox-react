@@ -4,7 +4,6 @@ import system from '@rebass/components'
 
 import YoutubeSearch from '../YoutubeSearch'
 import { actions as songActions } from '../models/song'
-import { actions as queueActions } from '../models/queue'
 
 import { State as RootState } from '../reducers'
 import { State, types } from './redux'
@@ -17,7 +16,11 @@ const SongItem = system({
   is: 'li'
 })
 
-type Props = State & typeof songActions & typeof queueActions & { roomId: string }
+type PassedProps = {
+  enqueueSongs: (songs: State['songs']) => any
+  roomId: string
+}
+type Props = State & typeof songActions & PassedProps
 
 class Room extends React.Component<Props, {}> {
   componentDidMount() {
@@ -35,7 +38,8 @@ class Room extends React.Component<Props, {}> {
     }
 
     const songList = songs.map(s => {
-      return <SongItem key={s.id}>{s.name}</SongItem>
+      const onClick = () => this.props.enqueueSongs([s])
+      return <SongItem onClick={onClick} key={s.id}>{s.name}</SongItem>
     })
 
     return <>
@@ -59,10 +63,7 @@ class Room extends React.Component<Props, {}> {
 type MapStateToProps = (state: RootState) => State
 const mapStateToProps: MapStateToProps = (state) => state.library
 
-export default connect<State, typeof songActions & typeof queueActions, { roomId: string }>(
+export default connect<State, typeof songActions, PassedProps>(
   mapStateToProps,
-  {
-    ...songActions,
-    ...queueActions
-  },
+  songActions,
 )(Room)
