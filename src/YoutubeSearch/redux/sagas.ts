@@ -22,6 +22,11 @@ function youtubeAPI(options: Options): Promise<Response> {
 function* querySongs(
   action: ReturnType<ActionCreators['ChangeQuery']>,
 ) {
+
+  if (!action.query) {
+    return yield put(actions.getResultsOK([]))
+  }
+
   yield delay(250)
 
   const options: Options = {
