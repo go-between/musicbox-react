@@ -39,6 +39,7 @@ class Player extends React.Component<Props, {}> {
           <ReactPlayer
             style={{position: 'absolute', top: 0, left: 0}}
             url={`https://www.youtube.com/watch?v=${currentSong.youtubeId}`}
+            // controls={true}
             playing={currentSong ? true : false}
             height="100%"
             width="100%"

@@ -29,6 +29,7 @@ export interface ICardProps {
   isDragging: boolean
   connectDragSource: ConnectDragSource
   connectDropTarget: ConnectDropTarget
+  removeSong: () => void
 }
 
 interface ICardInstance {
@@ -39,7 +40,7 @@ const SongCard: React.RefForwardingComponent<
   HTMLDivElement,
   ICardProps
 > = React.forwardRef(
-  ({ isDragging, connectDragSource, connectDropTarget, children }, ref) => {
+  ({ isDragging, connectDragSource, connectDropTarget, children, removeSong }, ref) => {
     const elementRef = useRef(null)
     connectDragSource(elementRef)
     connectDropTarget(elementRef)
@@ -49,8 +50,12 @@ const SongCard: React.RefForwardingComponent<
       getNode: () => elementRef.current,
     }))
     return (
-      <div ref={elementRef} style={{ ...style, opacity }}>
+      <div
+        ref={elementRef}
+        style={{ ...style, opacity }}
+      >
         {children}
+        <button onClick={removeSong}>X</button>
       </div>
     )
   },
