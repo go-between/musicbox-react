@@ -1,12 +1,15 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import system from '@rebass/components'
+import uuid from 'uuid/v4'
 
 import { actions as queueActions } from 'models/queue'
+import { Song } from 'models/song'
 import { State as RootState } from 'reducers'
 import Library from 'Library'
 
-import { State, types } from './redux'
+import SongCard from './SongCard'
+import { actions, State, types } from './redux'
 
 const Container = system({
   is: 'div',
@@ -23,16 +26,27 @@ const SongList = system({
   is: 'ul'
 })
 
-const SongItem = system({
-  is: 'li'
-})
-
 type PassedProps = { roomId: string }
-type Props = State & PassedProps & typeof queueActions
+type Actions = typeof queueActions & typeof actions
+type Props = Actions & PassedProps & State
 
 class UserSong extends React.Component<Props, {}> {
   componentDidMount() {
     this.props.getUserQueue(types.GET_USER_QUEUE_OK, types.GET_USER_QUEUE_ERR)
+  }
+
+  enqueueSongs = (songs: Song[]) => {
+    const enqueues = songs.map(song => ({
+      id: uuid(),
+      song
+    }))
+    this.props.enqueueSongs(enqueues)
+    this.props.updateQueue()
+  }
+
+  moveSongCard = (dragIndex: number, hoverIndex: number) => {
+    this.props.updateOrder(dragIndex, hoverIndex)
+    this.props.updateQueue()
   }
 
   renderSongs = () => {
@@ -41,24 +55,33 @@ class UserSong extends React.Component<Props, {}> {
       return null
     }
 
-    const songList = enqueuedSongs.map(s => {
-      return <SongItem key={s.id}>{s.name}</SongItem>
+    const songList = enqueuedSongs.map((queue, i) => {
+      const { id, song: { name } } = queue
+      return (
+        <SongCard
+          key={id}
+          index={i}
+          id={id}
+          moveCard={this.moveSongCard}
+        >
+          {name}
+        </SongCard>
+      )
     })
 
-    return <>
+    return (
       <SongList>
         {songList}
       </SongList>
-    </>
+    )
   }
 
   render() {
-
     return(
       <>
         <Container>
           <Title>Library</Title>
-          <Library roomId={this.props.roomId} />
+          <Library enqueueSongs={this.enqueueSongs} roomId={this.props.roomId} />
         </Container>
         <Container>
           <Title>My Queue</Title>
@@ -72,7 +95,7 @@ class UserSong extends React.Component<Props, {}> {
 type MapStateToProps = (state: RootState) => State
 const mapStateToProps: MapStateToProps = (state) => state.room.userSong
 
-export default connect<State, typeof queueActions, PassedProps>(
+export default connect<State, Actions, PassedProps>(
   mapStateToProps,
-  queueActions,
+  { ...actions, ...queueActions },
 )(UserSong)

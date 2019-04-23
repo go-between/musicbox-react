@@ -16,8 +16,13 @@ const getUserQueueERR: ActionCreators['GetUserQueueERR'] = (returnERR, error) =>
   error,
 })
 
+const updateQueue: ActionCreators['UpdateQueue'] = () => ({
+  type: types.UPDATE_QUEUE
+})
+
 export default {
   getUserQueue,
   getUserQueueOK,
   getUserQueueERR,
+  updateQueue,
 }
