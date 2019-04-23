@@ -8,7 +8,7 @@
 - [ ] A User can only be active in one Room at a time; attempts to join a second room are prompted to return to lobby or activate the new room
 - [x] A User must be able to join a room with other Users
 - [x] A User must be able to search for songs on youtube and add them to a library
-- [ ] A User must be able to use Music box on any device (e.g mobile, desktop, ps3, etc.)
+- [x] A User must be able to add Songs from their Library to the current Rooms Queue
 - [ ] A User must be able to chat with other Users
 - [x] A User must be able to enqueue songs into a Room
 - [x] A User must be able to change the order of their songs in the queue
