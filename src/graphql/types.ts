@@ -9,7 +9,6 @@ export type APIRoom = {
 
 export type APIRoomSong = {
   id: string
-  order: number
   room: APIRoom
   song: APISong
   user: APIUser
@@ -48,16 +47,26 @@ export type APIJoinRoomResponse = {
   }
 }
 
+export type APIOrderRoomSongsResponse = {
+  orderRoomSongs: {
+    errors: string[]
+  }
+}
+
+export type APIRoomResponse = {
+  rooms: APIRoom[]
+}
+
+export type APIRoomSongResponse = {
+  roomSongs: APIRoomSong[]
+}
+
 export type APISongResponse = {
   songs: APISong[]
 }
 
 export type APIUserResponse = {
   users: APIUser[]
-}
-
-export type APIRoomSongResponse = {
-  roomSongs: APIRoomSong[]
 }
 
 export type Options = {

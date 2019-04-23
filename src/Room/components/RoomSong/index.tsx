@@ -17,9 +17,9 @@ class RoomSong extends React.Component<Props, {}> {
   }
 
   render() {
-    const songs = this.props.queue.map(song => (
-      <List.Item key={song.songId}>
-        {song.name} ({song.order}) by {song.user}
+    const songs = this.props.queue.map(queue => (
+      <List.Item key={queue.id}>
+        {queue.song.name} by {queue.user.email} - {queue.id}
       </List.Item>
     ))
     return  (
