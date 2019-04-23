@@ -57,12 +57,17 @@ class UserSong extends React.Component<Props, {}> {
 
     const songList = enqueuedSongs.map((queue, i) => {
       const { id, song: { name } } = queue
+      const removeSong = () => {
+        this.props.removeQueue(id)
+      }
+
       return (
         <SongCard
           key={id}
           index={i}
           id={id}
           moveCard={this.moveSongCard}
+          removeSong={removeSong}
         >
           {name}
         </SongCard>

@@ -53,6 +53,12 @@ export type APIOrderRoomSongsResponse = {
   }
 }
 
+export type APIDeleteRoomSongResponse = {
+  deleteRoomSong: {
+    errors: string[]
+  }
+}
+
 export type APIRoomResponse = {
   rooms: APIRoom[]
 }

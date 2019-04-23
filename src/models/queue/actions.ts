@@ -20,9 +20,15 @@ const updateQueue: ActionCreators['UpdateQueue'] = () => ({
   type: types.UPDATE_QUEUE
 })
 
+const removeQueue: ActionCreators['RemoveQueue'] = (id) => ({
+  type: types.REMOVE_QUEUE,
+  id
+})
+
 export default {
   getUserQueue,
   getUserQueueOK,
   getUserQueueERR,
   updateQueue,
+  removeQueue
 }
