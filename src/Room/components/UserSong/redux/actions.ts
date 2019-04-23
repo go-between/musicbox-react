@@ -5,6 +5,13 @@ const enqueueSongs: ActionCreators['EnqueueSongs'] = (songs) => ({
   songs,
 })
 
+const updateOrder: ActionCreators['UpdateOrder'] = (dragIndex, hoverIndex) => ({
+  type: types.UPDATE_ORDER,
+  dragIndex,
+  hoverIndex,
+})
+
 export default {
-  enqueueSongs
+  enqueueSongs,
+  updateOrder,
 }
