@@ -32,7 +32,15 @@ function* updateQueue(
   yield apply(api, api.roomSongs.orderRoomSongs, [roomId, orderedSongs])
 }
 
+function* removeQueue(
+  action: ReturnType<ActionCreators['RemoveQueue']>
+) {
+  const api = getSingleton()
+  yield apply(api, api.roomSongs.delete, [action.id])
+}
+
 export default function* saga() {
   yield takeLatest(types.GET_USER_QUEUE, getUserQueue)
   yield takeLatest(types.UPDATE_QUEUE, updateQueue)
+  yield takeLatest(types.REMOVE_QUEUE, removeQueue)
 }
