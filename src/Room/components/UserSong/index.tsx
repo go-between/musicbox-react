@@ -8,6 +8,7 @@ import { Song } from 'models/song'
 import { State as RootState } from 'reducers'
 import Library from 'Library'
 
+import SongCard from './SongCard'
 import { actions, State, types } from './redux'
 
 const Container = system({
@@ -23,10 +24,6 @@ const Title = system({
 
 const SongList = system({
   is: 'ul'
-})
-
-const SongItem = system({
-  is: 'li'
 })
 
 type PassedProps = { roomId: string }
@@ -47,22 +44,36 @@ class UserSong extends React.Component<Props, {}> {
     this.props.updateQueue()
   }
 
+  moveSongCard = (dragIndex: number, hoverIndex: number) => {
+    this.props.updateOrder(dragIndex, hoverIndex)
+    this.props.updateQueue()
+  }
+
   renderSongs = () => {
     const { enqueuedSongs } = this.props
     if (enqueuedSongs.length === 0) {
       return null
     }
 
-    const songList = enqueuedSongs.map(queue => {
+    const songList = enqueuedSongs.map((queue, i) => {
       const { id, song: { name } } = queue
-      return <SongItem key={id}>{name}</SongItem>
+      return (
+        <SongCard
+          key={id}
+          index={i}
+          id={id}
+          moveCard={this.moveSongCard}
+        >
+          {name}
+        </SongCard>
+      )
     })
 
-    return <>
+    return (
       <SongList>
         {songList}
       </SongList>
-    </>
+    )
   }
 
   render() {
