@@ -95,7 +95,7 @@ class Client {
     return []
   }
 
-  private parse: (event: MessageEvent) => Action[] | void = (event) => {
+  private parse: (event: MessageEvent) => Action[] = (event) => {
     const data = JSON.parse(event.data)
     if (data.identifier) {
       data.identifier = JSON.parse(data.identifier)
@@ -105,16 +105,15 @@ class Client {
     switch (parsedData.type) {
       case 'ping':
         this.log(parsedData.type, parsedData)
-        return
+        return []
       case 'confirm_subscription':
         this.log(parsedData.type, parsedData)
-        return
+        return []
       case undefined:
         this.log('notify', parsedData)
         // We must lift the channel identifier to the top-level of this
         // object in order to typehint in #notify successfully
-        this.notify({ messageType: parsedData.identifier.channel, ...parsedData })
-        return
+        return this.notify({ messageType: parsedData.identifier.channel, ...parsedData })
     }
   }
 

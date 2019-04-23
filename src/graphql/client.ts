@@ -1,8 +1,28 @@
 import graphql from 'graphql.js'
-import { Options } from './types'
+import * as Types from './types'
+
+type Rooms = {
+  index: () => Promise<Types.APIRoomResponse>
+  joinRoom: (roomId: string) => Promise<Types.APIJoinRoomResponse>
+}
+
+type OrderedSong = { songId: string; roomSongId: string }
+type RoomSongs = {
+  index: (roomId: string, forUser: boolean) => Promise<Types.APIRoomSongResponse>
+  orderRoomSongs: (roomId: string, orderedSongs: OrderedSong[]) => Promise<Types.APIOrderRoomSongsResponse>
+}
+
+type Songs = {
+  create: (youtubeId: string) => Promise<Types.APICreateSongResponse>
+  library: () => Promise<Types.APISongResponse>
+}
+
+type Users = {
+  inRoom: (roomId: string) => Promise<Types.APIUserResponse>
+}
 
 export default class Client {
-  rooms: any = {
+  rooms: Rooms = {
     index: () => this.baseClient.query(`
       {
         rooms {
@@ -13,7 +33,7 @@ export default class Client {
 
     joinRoom: (roomId) => this.baseClient.mutate(`
       (@autodeclare) {
-        joinRoom(input: {roomId: $roomId}) {
+        joinRoom(input: { roomId: $roomId }) {
           room {
             ...room
           }
@@ -23,18 +43,7 @@ export default class Client {
     `)({roomId})
   }
 
-  roomSongs: any = {
-    create: (roomId, songId, order) => this.baseClient.mutate(`
-      (@autodeclare) {
-        createRoomSong(input: {roomId: $roomId, songId: $songId, order: $order}) {
-          roomSong {
-            ...roomSong
-          }
-          errors
-        }
-      }
-    `)({roomId, songId, order}),
-
+  roomSongs: RoomSongs = {
     index: (roomId, forUser) => this.baseClient.query(`
       (@autodeclare) {
         roomSongs(roomId: $roomId, forUser: $forUser) {
@@ -42,9 +51,20 @@ export default class Client {
         }
       }
     `)({roomId, forUser}),
+
+    orderRoomSongs: (roomId, orderedSongs) => this.baseClient.mutate(`
+      ($roomId: ID!, $orderedSongs: [OrderedSongObject!]!) {
+        orderRoomSongs(input: {
+          roomId: $roomId
+          orderedSongs: $orderedSongs
+        }) {
+          errors
+        }
+      }
+    `)({ roomId, orderedSongs })
   }
 
-  songs: any = {
+  songs: Songs = {
     create: (youtubeId) => this.baseClient.mutate(`
       (@autodeclare) {
         createSong(input: { youtubeId: $youtubeId }) {
@@ -65,7 +85,7 @@ export default class Client {
     `)()
   }
 
-  users: any = {
+  users: Users = {
     inRoom: (roomId) => this.baseClient.query(`
       {
         users {
@@ -76,18 +96,18 @@ export default class Client {
   }
 
   public host: string
-  public options: Options = {}
+  public options: Types.Options = {}
 
   private baseClient: any
   private fragments: any = {
-    enqueue: 'on Enqueue { order, song { ...song }, user { ...user } }',
-    roomSong: 'on RoomSong { id, order, song { ...song }, room { ...room }, user { ...user } }',
+    enqueue: 'on Enqueue { id, song { ...song }, user { ...user } }',
+    roomSong: 'on RoomSong { id, song { ...song }, room { ...room }, user { ...user } }',
     room: 'on Room { currentSong { ...song }, currentSongStart, id, name, enqueues { ...enqueue }, users { ...user } }',
     song: 'on Song { id, description, durationInSeconds, name, youtubeId }',
     user: 'on User { id, email } ',
   }
 
-  constructor(host: string, authorizationCode: string | null, options: Options) {
+  constructor(host: string, authorizationCode: string | null, options: Types.Options) {
     this.host = host
     this.options = options
 

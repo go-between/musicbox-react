@@ -34,12 +34,12 @@ export type GetRoomsERR<T> = (type: T, error: Error) => {
 }
 
 type JoinRoom = <OK, ERR>(
-  roomId: Room['id'],
+  roomId: string,
   returnOK: OK,
   returnERR: ERR,
 ) => {
   type: typeof JOIN_ROOM,
-  roomId: Room['id'],
+  roomId: string,
   returnOK: OK,
   returnERR: ERR,
 }
