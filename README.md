@@ -16,6 +16,8 @@
 - [ ] A room must be able to manage the order of the songs in the queue (round robin style)
 - [ ] Chat records must persist over time (set limits?)
 - [ ] Comments in chat must be contextually aware of the song
+- [ ] Song playing in room is synchronized for all users in room, including those who join mid-song
+- [ ] Users cannot manipulate (pause/skip forward) playing song
 
 <hr>
 
