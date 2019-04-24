@@ -1,8 +1,9 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { RouteComponentProps } from 'react-router'
-import { Box, Heading } from 'rebass'
+import { Box, Flex, Heading, Text } from 'rebass'
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@reach/tabs'
+import { Radio, RotateCw, User } from 'react-feather'
 import system from '@rebass/components'
 
 import { State as RootState } from 'reducers'
@@ -51,22 +52,38 @@ class Room extends React.Component<Props, {}> {
         minHeight="100vh"
       >
         <Grid.Body>
-          <Grid.Column flex="0 0 25%" mx={2}>
+          <Grid.Column flex="0 0 30%" mx={2}>
             <Box>
               <UserSong roomId={id} />
             </Box>
           </Grid.Column>
 
           <Grid.Column flex="1" mx={2} order={[-1, 0]}>
-            <Box>
+            <Box mb={4}>
               <Player roomId={id} />
             </Box>
 
             <Box>
               <Tabs>
                 <TabList>
-                  <Tab>Room Queue</Tab>
-                  <Tab>Room Users</Tab>
+                  <Tab>
+                    <Flex alignItems="center">
+                      <Radio size={14}/>
+                      <Text>Queue</Text>
+                    </Flex>
+                  </Tab>
+                  <Tab>
+                    <Flex alignItems="center">
+                      <User size={14} />
+                      <Text>Users</Text>
+                    </Flex>
+                  </Tab>
+                  <Tab>
+                    <Flex alignItems="center">
+                      <RotateCw size={14} />
+                      <Text>History</Text>
+                    </Flex>
+                  </Tab>
                 </TabList>
 
                 <TabPanels>
@@ -76,12 +93,15 @@ class Room extends React.Component<Props, {}> {
                   <TabPanel>
                     <Users roomId={id} />
                   </TabPanel>
+                  <TabPanel>
+                    Song History
+                  </TabPanel>
                 </TabPanels>
               </Tabs>
             </Box>
           </Grid.Column>
 
-          <Grid.Column flex="0 0 25%" mx={2}>
+          <Grid.Column flex="0 0 30%" mx={2}>
             <ChatPanel>
               <Heading>Chat Placeholder</Heading>
             </ChatPanel>
