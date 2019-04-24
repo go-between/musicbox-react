@@ -52,14 +52,12 @@ class Room extends React.Component<Props, {}> {
         <Grid.Body>
           <Grid.Column flex="0 0 25%" mx={2}>
             <Box>
-              <Heading>Song Library</Heading>
               <UserSong roomId={id} />
             </Box>
           </Grid.Column>
 
           <Grid.Column flex="1" mx={2} order={[-1, 0]}>
             <Box>
-              <Heading>Song Player</Heading>
               <Player roomId={id} />
             </Box>
 
@@ -71,7 +69,7 @@ class Room extends React.Component<Props, {}> {
 
           <Grid.Column flex="0 0 25%" mx={2}>
             <ChatPanel>
-              <Heading>Chat</Heading>
+              <Heading>Current Users</Heading>
               <Users roomId={id} />
             </ChatPanel>
           </Grid.Column>
