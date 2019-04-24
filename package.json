@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@reach/tabs": "^0.1.3",
     "@rebass/components": "^4.0.0-1",
     "@types/history": "^4.7.2",
     "@types/react-redux": "^7.0.1",

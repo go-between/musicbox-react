@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import system from '@rebass/components'
+import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@reach/tabs'
 import uuid from 'uuid/v4'
 
 import { actions as queueActions } from 'models/queue'
@@ -10,17 +11,6 @@ import Library from 'Library'
 
 import SongCard from './SongCard'
 import { actions, State, types } from './redux'
-
-const Container = system({
-  is: 'div',
-  display: ['block', 'flex'],
-  flex: '1',
-}, { margin: 20 })
-
-const Title = system({
-}, {
-  fontWeight: 'bold'
-})
 
 const SongList = system({
   is: 'ul'
@@ -84,14 +74,21 @@ class UserSong extends React.Component<Props, {}> {
   render() {
     return(
       <>
-        <Container>
-          <Title>Library</Title>
-          <Library enqueueSongs={this.enqueueSongs} roomId={this.props.roomId} />
-        </Container>
-        <Container>
-          <Title>My Queue</Title>
-          {this.renderSongs()}
-        </Container>
+        <Tabs>
+          <TabList>
+            <Tab>My Library</Tab>
+            <Tab>My Queue</Tab>
+          </TabList>
+
+          <TabPanels>
+            <TabPanel>
+              <Library enqueueSongs={this.enqueueSongs} roomId={this.props.roomId} />
+            </TabPanel>
+            <TabPanel>
+              {this.renderSongs()}
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
       </>
     )
   }
