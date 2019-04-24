@@ -12,9 +12,14 @@ import Library from 'Library'
 import SongCard from './SongCard'
 import { actions, State, types } from './redux'
 
-const SongList = system({
-  is: 'ul'
-})
+const SongList = system(
+  {
+    is: 'ul',
+    p: 0,
+    m: 0,
+  },
+  'space'
+)
 
 type PassedProps = { roomId: string }
 type Actions = typeof queueActions & typeof actions
