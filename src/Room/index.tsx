@@ -2,6 +2,7 @@ import * as React from 'react'
 import { connect } from 'react-redux'
 import { RouteComponentProps } from 'react-router'
 import { Box, Heading } from 'rebass'
+import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@reach/tabs'
 import system from '@rebass/components'
 
 import { State as RootState } from 'reducers'
@@ -62,15 +63,27 @@ class Room extends React.Component<Props, {}> {
             </Box>
 
             <Box>
-              <Heading>Room Queue</Heading>
-              <RoomSong roomId={id} />
+              <Tabs>
+                <TabList>
+                  <Tab>Room Queue</Tab>
+                  <Tab>Room Users</Tab>
+                </TabList>
+
+                <TabPanels>
+                  <TabPanel>
+                    <RoomSong roomId={id} />
+                  </TabPanel>
+                  <TabPanel>
+                    <Users roomId={id} />
+                  </TabPanel>
+                </TabPanels>
+              </Tabs>
             </Box>
           </Grid.Column>
 
           <Grid.Column flex="0 0 25%" mx={2}>
             <ChatPanel>
-              <Heading>Current Users</Heading>
-              <Users roomId={id} />
+              <Heading>Chat Placeholder</Heading>
             </ChatPanel>
           </Grid.Column>
         </Grid.Body>
