@@ -12,7 +12,7 @@ import { State, actions } from './redux'
 
 const PlayerWrapper = system(
   {
-    is: 'div',
+    as: 'div',
     pt: '56.25%'
   },
   {
@@ -23,7 +23,7 @@ const PlayerWrapper = system(
 
 const VideoPlayerIcon = system(
   {
-    is: Card,
+    as: Card,
     alignItems: 'center',
     bg: 'white',
     color: 'offBlack',
