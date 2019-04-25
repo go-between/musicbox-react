@@ -8,9 +8,17 @@ import { actions as songActions } from '../models/song'
 import { State as RootState } from '../reducers'
 import { State, types } from './redux'
 
-const SongList = system({
-  is: 'ul'
-})
+const SongList = system(
+  {
+    is: 'ul',
+    m: 0,
+    p: 0,
+  },
+  {
+    listStyleType: 'none',
+  },
+  'space',
+)
 
 const SongItem = system({
   is: 'li'
