@@ -4,6 +4,7 @@ import system from '@rebass/components'
 import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@reach/tabs'
 import uuid from 'uuid/v4'
 
+import { getSingleton } from 'cable'
 import { actions as queueActions } from 'models/queue'
 import { Song } from 'models/song'
 import { State as RootState } from 'reducers'
@@ -28,6 +29,9 @@ type Props = Actions & PassedProps & State
 class UserSong extends React.Component<Props, {}> {
   componentDidMount() {
     this.props.getUserQueue(types.GET_USER_QUEUE_OK, types.GET_USER_QUEUE_ERR)
+
+    const client = getSingleton()
+    client.subscribeTo('userSong').roomSong(this.props.roomId, this.props.updateUserSongs)
   }
 
   enqueueSongs = (songs: Song[]) => {

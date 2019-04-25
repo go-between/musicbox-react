@@ -11,7 +11,13 @@ const updateOrder: ActionCreators['UpdateOrder'] = (dragIndex, hoverIndex) => ({
   hoverIndex,
 })
 
+const updateUserSongs: ActionCreators['UpdateUserSongs'] = (queue) => ({
+  type: types.UPDATE_USER_SONGS,
+  queue,
+})
+
 export default {
   enqueueSongs,
   updateOrder,
+  updateUserSongs,
 }
