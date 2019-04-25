@@ -8,7 +8,9 @@ const colors = {
   grayDark: '#666666',
   offBlack: '#484848',
   offWhite: '#f7f7f7',
+  offWhite90: 'hsla(0, 0%, 90%)',
   purple: '#5E50B5',
+  purpleLight: '#796fb5',
   red: '#c34848',
   redDark: '#9c292d',
   redLight: '#f7e2e2',
@@ -24,6 +26,18 @@ const space = [0, 4, 8, 16, 32, 64, 128, 256]
 export default {
   borders: [0, '1px solid', '2px solid'],
   breakpoints: ['800px'],
+  buttons: {
+    primary: {
+      color: colors.white,
+      cursor: 'pointer',
+      backgroundColor: colors.purple,
+    },
+    outline: {
+      color: colors.purple,
+      backgroundColor: 'transparent',
+      boxShadow: 'inset 0 0 0 2px'
+    }
+  },
   colors,
   fonts: {
     sans: 'system-ui, sans-serif',
