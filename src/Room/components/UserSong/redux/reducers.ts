@@ -16,6 +16,10 @@ export default function reducer(state: State = initialState, action: Action): St
       songs.splice(action.dragIndex, 1)
       songs.splice(action.hoverIndex, 0, card)
       return { ...state, enqueuedSongs: [...songs] }
+    case types.UPDATE_USER_SONGS:
+      const enqueuedSongIds = action.queue.map(q => q.id)
+      const stillEnqueuedSongs = state.enqueuedSongs.filter(q => enqueuedSongIds.includes(q.id))
+      return { ...state, enqueuedSongs: stillEnqueuedSongs }
     default:
       return state
   }
