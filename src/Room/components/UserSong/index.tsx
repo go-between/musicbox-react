@@ -1,7 +1,9 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
+import { Inbox, List } from 'react-feather'
+import { Flex, Text } from 'rebass'
 import system from '@rebass/components'
-import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@reach/tabs'
+import UITabs from '../../../components/ui-tabs'
 import uuid from 'uuid/v4'
 
 import { getSingleton } from 'cable'
@@ -83,21 +85,33 @@ class UserSong extends React.Component<Props, {}> {
   render() {
     return(
       <>
-        <Tabs>
-          <TabList>
-            <Tab>My Library</Tab>
-            <Tab>My Queue</Tab>
-          </TabList>
+        <UITabs p={2}>
+          <UITabs.TabList>
+            <UITabs.Tab>
+              <Flex alignItems="center">
+                <Inbox size={16} />
+                <Text ml={2}>Inbox</Text>
+              </Flex>
+            </UITabs.Tab>
 
-          <TabPanels>
-            <TabPanel>
+            <UITabs.Tab>
+              <Flex alignItems="center">
+                <List size={16} />
+                <Text ml={2}>My Queue</Text>
+              </Flex>
+            </UITabs.Tab>
+          </UITabs.TabList>
+
+          <UITabs.TabPanels>
+            <UITabs.TabPanel>
               <Library enqueueSongs={this.enqueueSongs} roomId={this.props.roomId} />
-            </TabPanel>
-            <TabPanel>
+            </UITabs.TabPanel>
+
+            <UITabs.TabPanel>
               {this.renderSongs()}
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
+            </UITabs.TabPanel>
+          </UITabs.TabPanels>
+        </UITabs>
       </>
     )
   }

@@ -13,8 +13,10 @@
 
  html {
   background-color: #f7f7f7;
+  height: 100%;
   line-height: 1.15; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
+  width: 100%;
 }
 
 /* Sections
@@ -25,7 +27,9 @@
  */
 
 body {
+  height: 100%;
   margin: 0;
+  width: 100%;
 }
 
 /**
@@ -350,4 +354,14 @@ template {
 
 [hidden] {
   display: none;
+}
+
+/* 3rd Party Overrides
+   ========================================================================== */
+
+/* TODO: do this with JS eventually */
+[data-reach-tab][data-selected] {
+  box-shadow: 0 2px 0 #5E50B5;
+  color: #5E50B5;
+  font-weight: bold;
 }

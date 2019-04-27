@@ -1,9 +1,10 @@
 import * as React from 'react'
+// import moment from 'moment'
 import { connect } from 'react-redux'
 import ReactPlayer from 'react-player'
 import system from '@rebass/components'
 import { Youtube } from 'react-feather'
-import { Card, Text } from 'rebass'
+import { Box, Card, Text } from 'rebass'
 
 import { getSingleton } from 'cable'
 import { State as RootState } from 'reducers'
@@ -16,9 +17,19 @@ const PlayerWrapper = system(
     pt: '56.25%'
   },
   {
-    position: 'relative'
+    position: 'relative',
   },
   'space'
+)
+
+const PlayerMetaWrapper = system(
+  {
+    as: Box,
+    bg: 'white',
+    p: 3,
+  },
+  'color',
+  'space',
 )
 
 const VideoPlayerIcon = system(
@@ -52,9 +63,10 @@ class Player extends React.Component<Props, {}> {
 
   render() {
     const { currentSong, currentSongStart } = this.props
+    console.log('currentsongstart: ', currentSongStart)
     if (!currentSong || !currentSongStart) {
       return (
-        <Card bg="offBlack" color="offWhite" boxShadow={1} borderRadius={4} p={4}>
+        <Card bg="offBlack" color="offWhite" p={4}>
           <VideoPlayerIcon>
             <Youtube size={20} />
           </VideoPlayerIcon>
@@ -76,9 +88,17 @@ class Player extends React.Component<Props, {}> {
             width="100%"
           />
         </PlayerWrapper>
-        current song id: {currentSong.youtubeId}
-        current song: {currentSong.name} <br />
-        current song start: {currentSongStart.toISOString()}
+
+        <PlayerMetaWrapper>
+          <Text
+            color="offBlack"
+            fontWeight="bold"
+          >
+            {currentSong.name}
+          </Text>
+          {/* current song id: {currentSong.youtubeId} */}
+          {/* current song start: {currentSongStart.toISOString()} */}
+        </PlayerMetaWrapper>
       </>
     )
   }

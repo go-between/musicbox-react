@@ -62,6 +62,7 @@ class Room extends React.Component<Props, { createSong: () => void }> {
     } = this.props
     const searchResults = results.map(result => {
       const onClick = () => this.props.createSong(result.id)
+      console.log(result)
 
       return (
         <List.Item key={result.id}>
@@ -71,8 +72,8 @@ class Room extends React.Component<Props, { createSong: () => void }> {
                 backgroundImage={`url(${result.image})`}
                 backgroundSize="cover"
                 borderRadius={4}
-                height="60px"
-                width="60px"
+                height="40px"
+                width="40px"
               />
             </Box>
 
@@ -84,13 +85,6 @@ class Room extends React.Component<Props, { createSong: () => void }> {
               >
                 {result.title}
               </Text>
-
-              <Text
-                color="grayDark"
-                fontSize={3}
-              >
-                {result.description}
-              </Text>
             </Box>
           </SearchResult>
         </List.Item>
@@ -99,7 +93,12 @@ class Room extends React.Component<Props, { createSong: () => void }> {
     return(
       <>
         <Box my={3}>
-          <Input type="search" value={this.props.query} onChange={this.changeQuery}/>
+          <Input
+            type="search"
+            value={this.props.query}
+            onChange={this.changeQuery}
+            width="100%"
+          />
         </Box>
 
         <List>
