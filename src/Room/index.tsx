@@ -1,10 +1,8 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
 import { RouteComponentProps } from 'react-router'
-import { Box, Flex, Heading, Text } from 'rebass'
-import { Tabs, TabList, Tab, TabPanels, TabPanel } from '@reach/tabs'
-import { Radio, RotateCw, User } from 'react-feather'
-import system from '@rebass/components'
+import { Box, Card, Flex, Text } from 'rebass'
+import { MessageCircle, Radio, RotateCw, User } from 'react-feather'
 
 import { State as RootState } from 'reducers'
 import { actions as roomActions } from 'models/room'
@@ -16,22 +14,7 @@ import UserSong from './components/UserSong'
 
 import { State, types } from './redux'
 import Grid from '../components/grid'
-
-const ChatPanel = system(
-  {
-    bg: 'white',
-    display: 'flex',
-    flexDirection: 'column',
-    flex: 1,
-    maxHeight: '100%',
-    boxShadow: 1,
-    p: 2,
-  },
-  'boxShadow',
-  'color',
-  'height',
-  'space',
-)
+import UITabs from '../components/ui-tabs'
 
 type Props = State & typeof roomActions & RouteComponentProps<{id: string}>
 
@@ -47,66 +30,67 @@ class Room extends React.Component<Props, {}> {
     }
 
     return(
-      <Grid
-        flexDirection="column"
-        minHeight="100vh"
-      >
-        <Grid.Body>
-          <Grid.Column flex="0 0 30%" mx={2}>
-            <Box>
-              <UserSong roomId={id} />
-            </Box>
-          </Grid.Column>
+      <Grid>
+        <Grid.Column width={['100%', '50%']} pr={[0, 4]}>
+          <Box pb={4}>
+            <UserSong roomId={id} />
+          </Box>
+        </Grid.Column>
 
-          <Grid.Column flex="1" mx={2} order={[-1, 0]}>
+        <Grid.Column width={['100%', '50%']} order={[-1, 0]} pl={[0, 4]} mb={[4, 0]}>
+          <Card
+            bg="white"
+            boxShadow={1}
+          >
             <Box mb={4}>
               <Player roomId={id} />
             </Box>
 
-            <Box>
-              <Tabs>
-                <TabList>
-                  <Tab>
-                    <Flex alignItems="center">
-                      <Radio size={14}/>
-                      <Text>Queue</Text>
-                    </Flex>
-                  </Tab>
-                  <Tab>
-                    <Flex alignItems="center">
-                      <User size={14} />
-                      <Text>Users</Text>
-                    </Flex>
-                  </Tab>
-                  <Tab>
-                    <Flex alignItems="center">
-                      <RotateCw size={14} />
-                      <Text>History</Text>
-                    </Flex>
-                  </Tab>
-                </TabList>
+            <UITabs>
+              <UITabs.TabList>
+                <UITabs.Tab>
+                  <Flex alignItems="center">
+                    <MessageCircle size={16}/>
+                    <Text ml={2}>Chat</Text>
+                  </Flex>
+                </UITabs.Tab>
+                <UITabs.Tab>
+                  <Flex alignItems="center">
+                    <Radio size={16}/>
+                    <Text ml={2}>Queue</Text>
+                  </Flex>
+                </UITabs.Tab>
+                <UITabs.Tab active="true">
+                  <Flex alignItems="center">
+                    <User size={16} />
+                    <Text ml={2}>Users</Text>
+                  </Flex>
+                </UITabs.Tab>
+                <UITabs.Tab>
+                  <Flex alignItems="center">
+                    <RotateCw size={16} />
+                    <Text ml={2}>History</Text>
+                  </Flex>
+                </UITabs.Tab>
+              </UITabs.TabList>
 
-                <TabPanels>
-                  <TabPanel>
-                    <RoomSong roomId={id} />
-                  </TabPanel>
-                  <TabPanel>
-                    <Users roomId={id} />
-                  </TabPanel>
-                  <TabPanel>
-                    Song History
-                  </TabPanel>
-                </TabPanels>
-              </Tabs>
-            </Box>
-          </Grid.Column>
-
-          <Grid.Column flex="0 0 30%" mx={2}>
-            <ChatPanel>
-              <Heading>Chat Placeholder</Heading>
-            </ChatPanel>
-          </Grid.Column>
-        </Grid.Body>
+              <UITabs.TabPanels>
+                <UITabs.TabPanel>
+                  <Box p={4}>Chat!</Box>
+                </UITabs.TabPanel>
+                <UITabs.TabPanel>
+                  <RoomSong roomId={id} />
+                </UITabs.TabPanel>
+                <UITabs.TabPanel>
+                  <Users roomId={id} />
+                </UITabs.TabPanel>
+                <UITabs.TabPanel>
+                  <Box p={4}>History!</Box>
+                </UITabs.TabPanel>
+              </UITabs.TabPanels>
+            </UITabs>
+          </Card>
+        </Grid.Column>
       </Grid>
     )
   }

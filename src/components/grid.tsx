@@ -1,25 +1,37 @@
 import system from '@rebass/components'
-import { Flex } from 'rebass'
+import { Box, Flex } from 'rebass'
 
 const Grid = system(
   {
-    as: Flex
-  },
-  'minHeight'
-)
-
-Grid.Body = system(
-  {
     as: Flex,
-    flex: 1,
-    flexDirection: ['column', 'row']
+    height: 'auto',
+    flexDirection: ['column', 'row'],
+    width: '100%',
   },
-  'flexDirection'
+  'border',
+  'flex',
+  'flexDirection',
+  'flexWrap',
+  'minHeight'
 )
 
 Grid.Column = system(
   {
-    as: 'div'
+    as: Box,
+  },
+  'color',
+  'flex',
+  'order',
+  'space',
+)
+
+Grid.ColumnAuto = system(
+  {
+    as: Box,
+    alignItems: 'stretch',
+    display: 'flex',
+    flex: ['100%', '1 0 0px'],
+    width: 'auto'
   },
   'color',
   'flex',
