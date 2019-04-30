@@ -146,6 +146,8 @@ class Lobby extends React.Component<Props, {}> {
             </Text>
 
             <Flex alignItems="center">
+              {r.users.map(user => user.name)}
+
               <UserIconMini mr={1}>
                 <Text fontSize={0}>DL</Text>
               </UserIconMini>
