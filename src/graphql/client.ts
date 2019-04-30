@@ -113,7 +113,7 @@ export default class Client {
     roomSong: 'on RoomSong { id, song { ...song }, room { ...room }, user { ...user } }',
     room: 'on Room { currentSong { ...song }, currentSongStart, id, name, enqueues { ...enqueue }, users { ...user } }',
     song: 'on Song { id, description, durationInSeconds, name, youtubeId }',
-    user: 'on User { id, email } ',
+    user: 'on User { id, email, name } ',
   }
 
   constructor(host: string, authorizationCode: string | null, options: Types.Options) {

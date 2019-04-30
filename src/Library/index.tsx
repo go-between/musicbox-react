@@ -67,6 +67,7 @@ const SongDuration = system(
 
 type PassedProps = {
   enqueueSongs: (songs: State['songs']) => any
+  enqueuedSongIds: string[]
   roomId: string
 }
 type Props = State & typeof songActions & PassedProps
@@ -91,6 +92,13 @@ class Room extends React.Component<Props, {}> {
       const songTitle = s.name.split('-')
       const songArtist = songTitle[0]
       const songName = songTitle[1]
+      const seconds = s.durationInSeconds % 60
+      const minutes = Math.floor(s.durationInSeconds / 60)
+
+      const EnqueuedSongStatus =
+        this.props.enqueuedSongIds.includes(s.id) ?
+        Check :
+        Plus
 
       return (
         <SongItem
@@ -99,7 +107,7 @@ class Room extends React.Component<Props, {}> {
         >
           <Flex alignItems="center" justifyContent="space-between">
             <Box mr={3}>
-              <Plus size={16} />
+              <EnqueuedSongStatus size={16} />
             </Box>
             <SongName>
               <Text
@@ -116,7 +124,7 @@ class Room extends React.Component<Props, {}> {
             </SongName>
 
             <SongDuration>
-              <Text textAlign="right">3:17</Text>
+              <Text textAlign="right">{minutes}:{seconds}</Text>
             </SongDuration>
           </Flex>
 
@@ -127,32 +135,6 @@ class Room extends React.Component<Props, {}> {
     return <>
       <SongList>
         {songList}
-        <SongItem
-        >
-          <Flex alignItems="center" justifyContent="space-between">
-            <Box mr={3}>
-              <Check size={16} />
-            </Box>
-            <SongName>
-              <Text
-                color="offBlack"
-                fontWeight="bold"
-              >
-                Truman
-              </Text>
-              <Text
-                color="grayDark"
-              >
-                Silly Banjo Diddy
-              </Text>
-            </SongName>
-
-            <SongDuration>
-              <Text textAlign="right">3:17</Text>
-            </SongDuration>
-          </Flex>
-
-        </SongItem>
       </SongList>
     </>
   }

@@ -33,11 +33,11 @@ const initialState = {
   }
 }
 
-cableClient({ debug: true })
+cableClient({ debug: false })
 graphClient(
   `${API_HOST}/api/v1/graphql`,
   initialState.auth.token,
-  { debug: true }
+  { debug: false }
 )
 
 const composeEnhancers =

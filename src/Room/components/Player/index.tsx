@@ -1,5 +1,5 @@
 import * as React from 'react'
-// import moment from 'moment'
+import moment from 'moment'
 import { connect } from 'react-redux'
 import ReactPlayer from 'react-player'
 import system from '@rebass/components'
@@ -56,14 +56,16 @@ const VideoPlayerIcon = system(
 type PassedProps = { roomId: string }
 type Props = State & PassedProps & typeof actions
 class Player extends React.Component<Props, {}> {
+  private player: ReactPlayer | null = null
+
   componentDidMount() {
     const client = getSingleton()
     client.subscribeTo('player').nowPlaying(this.props.roomId, actions.updateNowPlaying)
+    this.seek()
   }
 
   render() {
     const { currentSong, currentSongStart } = this.props
-    console.log('currentsongstart: ', currentSongStart)
     if (!currentSong || !currentSongStart) {
       return (
         <Card bg="offBlack" color="offWhite" p={4}>
@@ -80,6 +82,7 @@ class Player extends React.Component<Props, {}> {
       <>
         <PlayerWrapper>
           <ReactPlayer
+            ref={this.setPlayer}
             style={{position: 'absolute', top: 0, left: 0}}
             url={`https://www.youtube.com/watch?v=${currentSong.youtubeId}`}
             controls={true}
@@ -101,6 +104,17 @@ class Player extends React.Component<Props, {}> {
         </PlayerMetaWrapper>
       </>
     )
+  }
+
+  private setPlayer = (player: ReactPlayer) => this.player = player
+  private seek = () => {
+    if (!this.props.currentSongStart || !this.player) {
+      return
+    }
+
+    const now = moment()
+    const duration = moment.duration(now.diff(this.props.currentSongStart))
+    this.player.seekTo(duration.as('seconds'))
   }
 }
 
