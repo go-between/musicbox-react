@@ -7,13 +7,23 @@ import { State as RootState } from 'reducers'
 
 import { State, actions } from './redux'
 
-const UserList = system({
-  is: 'ul'
-})
+const UserList = system(
+  {
+    as: 'ul',
+    m: 0,
+    p: 4,
+  },
+  {
+    listStyleType: 'none'
+  },
+  'space'
+)
 
-const UserItem = system({
-  is: 'li'
-})
+const UserItem = system(
+  {
+    as: 'li'
+  }
+)
 
 type PassedProps = { roomId: string }
 type Props = State & PassedProps & typeof actions
@@ -26,9 +36,11 @@ class Player extends React.Component<Props, {}> {
   render() {
     const users = this.props.users.map(u => <UserItem key={u.id}>{u.email}</UserItem>)
 
-    return <UserList>
-      {users}
-    </UserList>
+    return (
+      <UserList>
+        {users}
+      </UserList>
+    )
   }
 }
 
