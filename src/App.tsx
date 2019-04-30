@@ -14,10 +14,13 @@ class App extends React.Component {
       <>
         <Provider store={store}>
           <TopNavHeader title="MusicBox" />
-          <Box as="main" p={[4, 5]}>
+          <Box
+            as="main"
+            px={[4, 5]}
+            py={4}
+          >
             <Router />
           </Box>
-          {/* <Footer title="footer" /> */}
         </Provider>
       </>
     )
