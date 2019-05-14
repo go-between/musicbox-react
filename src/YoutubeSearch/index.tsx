@@ -48,7 +48,7 @@ const SearchResult = system(
 )
 
 type PassedProps = {
-  createSong: (youtubeId: string) => void
+  createSong: (youtubeId: string, options: {}) => void
 }
 type Props = PassedProps & State & typeof actions
 
@@ -61,9 +61,13 @@ class Room extends React.Component<Props, { createSong: () => void }> {
     const {
       results,
     } = this.props
+
+    const success = () => {
+      this.props.changeQuery('')
+      this.props.getResultsOK([])
+    }
     const searchResults = results.map(result => {
-      const onClick = () => this.props.createSong(result.id)
-      console.log(result)
+      const onClick = () => this.props.createSong(result.id, { success })
 
       return (
         <List.Item key={result.id}>

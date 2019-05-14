@@ -3,12 +3,11 @@ import { connect } from 'react-redux'
 import system from '@rebass/components'
 import { themeGet } from 'styled-system'
 import { Box, Flex, Text } from 'rebass'
-import { Check, Plus } from 'react-feather'
+import { Check, Plus, X } from 'react-feather'
 
-import YoutubeSearch from '../YoutubeSearch'
 import { actions as songActions } from '../models/song'
-
 import { State as RootState } from '../reducers'
+
 import { State, types } from './redux'
 
 const SongList = system(
@@ -77,10 +76,6 @@ class Room extends React.Component<Props, {}> {
     this.props.getSongs(types.GET_SONG_OK, types.GET_SONGS_ERR)
   }
 
-  createSong = (youtubeId: string) => {
-    this.props.createSong(youtubeId, types.GET_SONG_OK, '')
-  }
-
   renderSongs = () => {
     const { songs } = this.props
     if (songs.length === 0) {
@@ -88,7 +83,8 @@ class Room extends React.Component<Props, {}> {
     }
 
     const songList = songs.map(s => {
-      const onClick = () => this.props.enqueueSongs([s])
+      const addSongToQueue = () => this.props.enqueueSongs([s])
+      const removeSongFromLibrary = () => this.props.removeSong(s.id, {returnOK: ''})
       const songTitle = s.name.split('-')
       const songArtist = songTitle[0]
       const songName = songTitle[1]
@@ -103,10 +99,9 @@ class Room extends React.Component<Props, {}> {
       return (
         <SongItem
           key={s.id}
-          onClick={onClick}
         >
           <Flex alignItems="center" justifyContent="space-between">
-            <Box mr={3}>
+            <Box mr={3} onClick={addSongToQueue}>
               <EnqueuedSongStatus size={16} />
             </Box>
             <SongName>
@@ -122,6 +117,10 @@ class Room extends React.Component<Props, {}> {
                 {songName || 'No Song Name Provided'}
               </Text>
             </SongName>
+
+            <Box mr={3} onClick={removeSongFromLibrary}>
+              <X size={16} />
+            </Box>
 
             <SongDuration>
               <Text textAlign="right">{minutes}:{seconds}</Text>
@@ -142,7 +141,6 @@ class Room extends React.Component<Props, {}> {
   render() {
     return (
       <>
-        <YoutubeSearch createSong={this.createSong} />
         {this.renderSongs()}
       </>
     )

@@ -13,7 +13,7 @@ import { State, types } from './redux'
 
 const RoomList = system(
   {
-    is: 'ul',
+    as: 'ul',
     display: 'flex',
     m: 0,
     p: 0,
@@ -28,7 +28,7 @@ const RoomList = system(
 
 const RoomItem = system(
   {
-    is: 'li',
+    as: 'li',
     bg: 'white',
     borderRadius: 4,
     border: '1px solid',
@@ -54,7 +54,7 @@ const RoomItem = system(
 
 const UserIconMini = system(
   {
-    is: Card,
+    as: Card,
     alignItems: 'center',
     bg: 'purpleLight',
     borderRadius: '100%',
