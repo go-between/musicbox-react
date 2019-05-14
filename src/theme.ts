@@ -54,6 +54,7 @@ export default {
   shadows: [
     'none',
     '0 2px 4px 0 hsla(0, 0%, 0%, 0.2)',
+    '0 1px 2px 0 hsla(0, 0%, 0%, 0.2)'
   ],
   space,
   textColor: colors.offBlack,
