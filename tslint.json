@@ -27,6 +27,7 @@
         "ignore-module": "^rxjs/"
       }
     ],
+    "no-unused-variable": false,
     "no-implicit-dependencies": false,
     "no-invalid-this": [true, "check-function-in-method"],
     "no-multiline-jsx": false,

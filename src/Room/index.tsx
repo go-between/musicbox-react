@@ -13,7 +13,6 @@ import Users from './components/Users'
 import UserSong from './components/UserSong'
 
 import { State, types } from './redux'
-import Grid from '../components/grid'
 import UITabs from '../components/ui-tabs'
 
 type Props = State & typeof roomActions & RouteComponentProps<{id: string}>
@@ -30,15 +29,15 @@ class Room extends React.Component<Props, {}> {
     }
 
     return(
-      <Grid>
-        <Grid.Column width={['100%', '50%']} pr={[0, 4]}>
+      <Flex flexDirection={['column', 'row']}justifyContent="space-between" mx={[0, -4]}>
+        <Box px={[0, 4]} width={['100%', '50%']}>
           <Box pb={4}>
             <UserSong roomId={id} />
           </Box>
-        </Grid.Column>
+        </Box>
 
-        <Grid.Column width={['100%', '50%']} order={[-1, 0]} pl={[0, 4]} mb={[4, 0]}>
-          <Card
+        <Box px={[0, 4]} width={['100%', '50%']}>
+         <Card
             bg="white"
             boxShadow={1}
           >
@@ -90,8 +89,8 @@ class Room extends React.Component<Props, {}> {
               </UITabs.TabPanels>
             </UITabs>
           </Card>
-        </Grid.Column>
-      </Grid>
+        </Box>
+      </Flex>
     )
   }
 }
