@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { connect } from 'react-redux'
 import system from '@rebass/components'
+import { connect } from 'react-redux'
+import { Search } from 'react-feather'
 import { themeGet } from 'styled-system'
 import { Box, Flex, Text } from 'rebass'
 import List from '../components/list'
@@ -92,14 +93,17 @@ class Room extends React.Component<Props, { createSong: () => void }> {
     })
     return(
       <>
-        <Box my={3}>
+        <Flex alignItems="center" justifyContent="space-between" my={4} mx={1} px={2}>
+          <Box mr={3}>
+            <Search size={16} />
+          </Box>
           <Input
             type="search"
             value={this.props.query}
             onChange={this.changeQuery}
             width="100%"
           />
-        </Box>
+        </Flex>
 
         <List>
           {searchResults}
