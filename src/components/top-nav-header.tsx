@@ -2,22 +2,19 @@ import * as React from 'react'
 import { Headphones, User } from 'react-feather'
 import system from '@rebass/components'
 import { Box, Flex } from 'rebass'
+import Container from './container'
 import Icon from './icon'
 
 const Header = system(
   {
     as: 'header',
-    alignItems: 'center',
-    display: 'flex',
-    justifyContent: 'space-between',
+    bg: 'white',
+    boxShadow: 1,
     py: 3,
-    px: [4, 5],
   },
-  'alignItems',
+  'boxShadow',
   'color',
   'display',
-  'flex',
-  'justifyContent',
   'space'
 )
 
@@ -67,24 +64,30 @@ const TopNavHeader: React.SFC<IProps> = ({
 }) => {
   return (
     <Header>
-      <Header.Logo href="/">
-        <Header.LogoIcon>
-          <Headphones size={20} />
-        </Header.LogoIcon>
-        <Box mx={2}>{title}</Box>
-      </Header.Logo>
+      <Container
+        alignItems="center"
+        display="flex"
+        justifyContent="space-between"
+      >
+        <Header.Logo href="/">
+          <Header.LogoIcon>
+            <Headphones size={20} />
+          </Header.LogoIcon>
+          <Box mx={2}>{title}</Box>
+        </Header.Logo>
 
-      <Box>
-        <Icon
-          bg="white"
-          border="2px solid"
-          borderColor="purple"
-          borderRadius="100%"
-          color="purple"
-        >
-          <User size={20} />
-        </Icon>
-      </Box>
+        <Box>
+          <Icon
+            bg="white"
+            border="2px solid"
+            borderColor="purple"
+            borderRadius="100%"
+            color="purple"
+          >
+            <User size={20} />
+          </Icon>
+        </Box>
+      </Container>
     </Header>
   )
 }
