@@ -6,7 +6,7 @@ const Grid = system(
     as: Flex,
     height: 'auto',
     flexDirection: ['column', 'row'],
-    width: '100%',
+    maxWidth: '100%',
   },
   'border',
   'flex',
