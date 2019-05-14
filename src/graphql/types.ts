@@ -60,6 +60,12 @@ export type APIDeleteRoomSongResponse = {
   }
 }
 
+export type APIDeleteSongUserResponse = {
+  deleteSongUser: {
+    errors: string[]
+  }
+}
+
 export type APIRoomResponse = {
   rooms: APIRoom[]
 }
