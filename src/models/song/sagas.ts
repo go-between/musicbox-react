@@ -1,4 +1,4 @@
-import { all, apply, put, takeLatest } from 'redux-saga/effects'
+import { all, apply, call, put, takeLatest } from 'redux-saga/effects'
 import { getSingleton } from '../../graphql/'
 import actions from './actions'
 import { createSongDeserializer, songsDeserializer } from './deserializers'
@@ -11,7 +11,22 @@ function* createSong(
 
   const response = yield apply(api, api.songs.create, [action.youtubeId])
   const song = createSongDeserializer(response)
-  yield put(actions.getSongOK(action.returnOK, song))
+  yield put(actions.getSongOK(action.options.returnOK, song))
+  if (action.options.success) {
+    yield call(action.options.success)
+  }
+}
+
+function* removeSong(
+  action: ReturnType<ActionCreators['RemoveSong']>,
+) {
+  const api = getSingleton()
+
+  yield apply(api, api.songs.delete, [action.id])
+  yield put(actions.removeSongOK(action.options.returnOK, action.id))
+  if (action.options.success) {
+    yield call(action.options.success)
+  }
 }
 
 function* getSongs(
@@ -27,4 +42,5 @@ function* getSongs(
 export default function* saga() {
   yield takeLatest(types.CREATE_SONG, createSong)
   yield takeLatest(types.GET_SONGS, getSongs)
+  yield takeLatest(types.REMOVE_SONG, removeSong)
 }

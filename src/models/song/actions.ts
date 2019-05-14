@@ -1,10 +1,9 @@
 import { ActionCreators, types } from './types'
 
-const createSong: ActionCreators['CreateSong'] = (youtubeId, returnOK, returnERR) => ({
+const createSong: ActionCreators['CreateSong'] = (youtubeId, options) => ({
   type: types.CREATE_SONG,
   youtubeId,
-  returnOK,
-  returnERR,
+  options,
 })
 
 const createSongOK: ActionCreators['CreateSongOK'] = (returnOK, song) => ({
@@ -33,6 +32,17 @@ const getSongsERR: ActionCreators['GetSongsERR'] = (returnERR, error) => ({
   error,
 })
 
+const removeSong: ActionCreators['RemoveSong'] = (id, options) => ({
+  type: types.REMOVE_SONG,
+  id,
+  options,
+})
+
+const removeSongOK: ActionCreators['RemoveSongOK'] = (returnOK, id) => ({
+  type: returnOK,
+  id,
+})
+
 export default {
   createSong,
   createSongOK,
@@ -40,4 +50,6 @@ export default {
   getSongs,
   getSongOK,
   getSongsERR,
+  removeSong,
+  removeSongOK,
 }
