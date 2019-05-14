@@ -55,18 +55,24 @@ const RoomItem = system(
 const UserIconMini = system(
   {
     is: Card,
+    alignItems: 'center',
     bg: 'purpleLight',
     borderRadius: '100%',
     color: 'white',
-    height: '20px',
+    display: 'flex',
+    height: '24px',
+    justifyContent: 'center',
     p: 1,
     textAlign: 'center',
-    width: '20px',
+    width: '24px',
   },
+  'alignItems',
   'border',
   'borderColor',
   'color',
+  'display',
   'height',
+  'justifyContent',
   'textAlign',
 )
 
@@ -81,6 +87,34 @@ class Lobby extends React.Component<Props, {}> {
   render() {
     const rooms = this.props.rooms.map(r => {
       const onClick = () => this.props.push(`/room/${r.id}`)
+      // TODO make this less terrible
+      const renderAdditionalActiveUsers = () => {
+        if (r.users && r.users.length > 3) {
+          return (
+            <UserIconMini
+              bg="white"
+              color="purpleLight"
+              border="1px solid"
+              borderColor="purpleLight"
+              mr={1}
+            >
+              <Text fontSize={0}>+{r.users.length - 3}</Text>
+            </UserIconMini>
+          )
+        } else {
+          return
+        }
+      }
+      const renderActiveUsers = r.users.map((user, i) => {
+        const matches = user.name.match(/\b(\w)/g)
+        const userInitials = matches ? matches.join('') : 'NA'
+        return (
+          <UserIconMini key={`user-${i}`} mr={1}>
+            <Text fontSize={0}>{userInitials}</Text>
+          </UserIconMini>
+        )
+      })
+
       return (
         <RoomItem
           key={r.id}
@@ -146,18 +180,8 @@ class Lobby extends React.Component<Props, {}> {
             </Text>
 
             <Flex alignItems="center">
-              <UserIconMini mr={1}>
-                <Text fontSize={0}>DL</Text>
-              </UserIconMini>
-              <UserIconMini mr={1}>
-                <Text fontSize={0}>TS</Text>
-              </UserIconMini>
-              <UserIconMini mr={1}>
-                <Text fontSize={0}>JS</Text>
-              </UserIconMini>
-              <UserIconMini bg="white" color="purpleLight" border="1px solid" borderColor="purpleLight" mr={1}>
-                <Text fontSize={0}>+3</Text>
-              </UserIconMini>
+              {renderActiveUsers}
+              {renderAdditionalActiveUsers()}
             </Flex>
           </Box>
 

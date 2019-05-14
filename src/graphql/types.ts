@@ -25,6 +25,7 @@ export type APISong = {
 export type APIUser = {
   id: string
   email: string
+  name: string
 }
 
 export type APICreateRoomSongResponse = {
