@@ -1,7 +1,7 @@
 import * as React from 'react';
 import system from '@rebass/components'
 import { connect } from 'react-redux'
-import { Search } from 'react-feather'
+// import { Search } from 'react-feather'
 import { themeGet } from 'styled-system'
 import { Box, Flex, Text } from 'rebass'
 import List from '../components/list'
@@ -25,6 +25,28 @@ const Input = system(
   'boxShadow',
   'color',
   'maxWidth',
+  'space',
+  'width',
+)
+
+const SearchResults = system(
+  {
+    as: 'ul',
+    bg: 'white',
+    boxShadow: 1,
+    my: '2px',
+    px: 0,
+    width: '100%',
+  },
+  {
+    borderBottomLeftRadius: '4px',
+    borderBottomRightRadius: '4px',
+    listStyleType: 'none',
+    position: 'absolute',
+    top: '100%'
+  },
+  'boxShadow',
+  'color',
   'space',
   'width',
 )
@@ -97,21 +119,18 @@ class Room extends React.Component<Props, { createSong: () => void }> {
     })
     return(
       <>
-        <Flex alignItems="center" justifyContent="space-between" my={4} mx={1} px={2}>
-          <Box mr={3}>
-            <Search size={16} />
-          </Box>
+        <Box width="100%">
           <Input
             type="search"
             value={this.props.query}
             onChange={this.changeQuery}
             width="100%"
           />
-        </Flex>
+        </Box>
 
-        <List>
+        <SearchResults>
           {searchResults}
-        </List>
+        </SearchResults>
       </>
     )
   }
