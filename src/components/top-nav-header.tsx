@@ -63,6 +63,17 @@ Header.LogoIcon = system(
   'boxShadow',
 )
 
+const YoutubeSearchWrapper = system(
+  {
+    as: Flex,
+    flex: 1,
+    mx: 3,
+  },
+  {
+    position: 'relative'
+  }
+)
+
 type Props = typeof songActions
 
 class TopNavHeader extends React.Component<Props, {}> {
@@ -86,9 +97,9 @@ class TopNavHeader extends React.Component<Props, {}> {
             <Box mx={2}>Music Box</Box>
           </Header.Logo>
 
-          <Box>
+          <YoutubeSearchWrapper>
             <YoutubeSearch createSong={this.createSong} />
-          </Box>
+          </YoutubeSearchWrapper>
 
           <Box>
             <Icon
