@@ -1,7 +1,7 @@
 import * as React from 'react';
 import system from '@rebass/components'
 import { connect } from 'react-redux'
-// import { Search } from 'react-feather'
+import { Search } from 'react-feather'
 import { themeGet } from 'styled-system'
 import { Box, Flex, Text } from 'rebass'
 import List from '../components/list'
@@ -10,14 +10,34 @@ import BgImage from '../components/bg-image'
 import { State as RootState } from '../reducers'
 import { actions, State } from './redux'
 
+const YoutubeSearchInput = system(
+  {
+    as: Flex,
+    alignItems: 'center',
+    bg: 'offWhite',
+    border: '1px solid',
+    borderColor: 'grayLight',
+    borderRadius: 4,
+    px: 2,
+    width: '100%',
+  },
+  'border',
+  'borderColor',
+  'borderRadius',
+  'color',
+  'space',
+  'width',
+)
+
 const Input = system(
   {
     as: 'input',
-    border: '1px solid',
-    borderColor: 'offWhite',
-    borderRadius: 4,
-    boxShadow: 1,
+    border: 'none',
+    bg: 'transparent',
     p: 2,
+  },
+  {
+    outline: 'none',
   },
   'border',
   'borderColor',
@@ -51,19 +71,23 @@ const SearchResults = system(
   'width',
 )
 
+const SearchResultItem = system(
+  {
+    as: 'li',
+  }
+)
+
 const SearchResult = system(
   {
     as: Flex,
     alignItems: 'center',
-    borderRadius: 6,
     display: 'flex',
     p: 3,
   },
   props => ({
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: `${themeGet('colors.white')(props)}`,
-      boxShadow: `${themeGet('shadows.1')(props)}`
+      backgroundColor: `${themeGet('colors.offWhite')(props)}`,
     }
   }),
   'borderRadius'
@@ -92,7 +116,7 @@ class Room extends React.Component<Props, { createSong: () => void }> {
       const onClick = () => this.props.createSong(result.id, { success })
 
       return (
-        <List.Item key={result.id}>
+        <SearchResultItem key={result.id}>
           <SearchResult onClick={onClick}>
             <Box mr={3}>
               <BgImage
@@ -114,19 +138,23 @@ class Room extends React.Component<Props, { createSong: () => void }> {
               </Text>
             </Box>
           </SearchResult>
-        </List.Item>
+        </SearchResultItem>
       )
     })
     return(
       <>
-        <Box width="100%">
+        <YoutubeSearchInput>
+          <Box>
+            <Search size={16} />
+          </Box>
+
           <Input
             type="search"
             value={this.props.query}
             onChange={this.changeQuery}
             width="100%"
           />
-        </Box>
+        </YoutubeSearchInput>
 
         <SearchResults>
           {searchResults}
