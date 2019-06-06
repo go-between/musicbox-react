@@ -63,7 +63,8 @@ const SearchResults = system(
     borderBottomRightRadius: '4px',
     listStyleType: 'none',
     position: 'absolute',
-    top: '100%'
+    top: '100%',
+    zIndex: '1000'
   },
   'boxShadow',
   'color',

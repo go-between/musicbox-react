@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { connect } from 'react-redux'
-import { Headphones, User } from 'react-feather'
+import { User } from 'react-feather'
 import system from '@rebass/components'
-import { Box, Flex } from 'rebass'
+import { Box, Flex, Image } from 'rebass'
 
 import { actions as songActions } from 'models/song'
 import { types as libraryTypes } from 'Library/redux'
@@ -12,6 +12,7 @@ import { State as AuthState } from 'Auth/redux'
 import YoutubeSearch from '../YoutubeSearch'
 import Container from './container'
 import Icon from './icon'
+import Logo from '../../public/Logo.png'
 
 const Header = system(
   {
@@ -90,11 +91,14 @@ class TopNavHeader extends React.Component<Props, {}> {
           display="flex"
           justifyContent="space-between"
         >
-          <Header.Logo href="/">
-            <Header.LogoIcon>
-              <Headphones size={20} />
-            </Header.LogoIcon>
-            <Box mx={2}>Music Box</Box>
+          <Header.Logo href="/lobby">
+            <Image
+              alt="MusicBox"
+              src={Logo}
+              borderRadius="100%"
+              height="50px"
+              width="50px"
+            />
           </Header.Logo>
 
           <YoutubeSearchWrapper>
