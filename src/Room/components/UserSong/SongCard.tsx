@@ -1,4 +1,7 @@
 import React, { useImperativeHandle, useRef } from 'react'
+import system from '@rebass/components'
+import { Button, Flex, Text } from 'rebass'
+import { X } from 'react-feather'
 import {
   DragSource,
   DropTarget,
@@ -13,13 +16,30 @@ import { XYCoord } from 'dnd-core'
 
 import { DRAG_TYPE } from './redux/types'
 
-const style = {
-  border: '1px dashed gray',
-  padding: '0.5rem 1rem',
-  marginBottom: '.5rem',
-  backgroundColor: 'white',
-  cursor: 'move',
-}
+const SongCardItem = system(
+  {
+    alignItems: 'center',
+    borderRadius: 4,
+    bg: 'white',
+    boxShadow: 2,
+    display: 'flex',
+    justifyContent: 'space-between',
+    mb: 3,
+    px: 3,
+    py: 2,
+  },
+  {
+    cursor: 'move',
+  },
+  'alignItems',
+  'borderRadius',
+  'boxShadow',
+  'color',
+  'display',
+  'flex',
+  'justifyContent',
+  'space',
+)
 
 export interface ICardProps {
   id: any
@@ -50,13 +70,21 @@ const SongCard: React.RefForwardingComponent<
       getNode: () => elementRef.current,
     }))
     return (
-      <div
+      <SongCardItem
+        as="div"
         ref={elementRef}
-        style={{ ...style, opacity }}
+        style={{ opacity }}
       >
         {children}
-        <button onClick={removeSong}>X</button>
-      </div>
+        <Button
+          bg="offWhite"
+          display="flex"
+          p={1}
+          onClick={removeSong}
+        >
+          <X color="#000" size={16} />
+        </Button>
+      </SongCardItem>
     )
   },
 )
