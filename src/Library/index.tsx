@@ -15,8 +15,7 @@ const SongList = system(
     as: 'ul',
     flex: '1 1 auto',
     m: 0,
-    px: 0,
-    py: 2,
+    p: 0,
   },
   {
     listStyleType: 'none',

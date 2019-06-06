@@ -29,7 +29,11 @@ class Room extends React.Component<Props, {}> {
     }
 
     return(
-      <Flex flexDirection={['column', 'row']}justifyContent="space-between" mx={[0, -4]}>
+      <Flex
+        flexDirection={['column-reverse', 'row']}
+        justifyContent="space-between"
+        mx={[0, -4]}
+      >
         <Box px={[0, 4]} width={['100%', '50%']}>
           <Box pb={4}>
             <UserSong roomId={id} />
@@ -46,7 +50,7 @@ class Room extends React.Component<Props, {}> {
             </Box>
 
             <UITabs>
-              <UITabs.TabList>
+              <UITabs.TabList display="flex" justifyContent="space-between">
                 <UITabs.Tab>
                   <Flex alignItems="center">
                     <MessageCircle size={16}/>
