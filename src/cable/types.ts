@@ -69,3 +69,35 @@ export type Subscriptions = {
 export type Callback<T> = (payload: T) => Action
 export type Action = { type: string }
 export type Options = { debug: boolean }
+
+// State, Actions
+
+export const CONNECT = 'cable/CONNECT'
+export const CONNECT_OK = 'cable/CONNECT_OK'
+
+type Types = {
+  CONNECT: typeof CONNECT
+  CONNECT_OK: typeof CONNECT_OK
+}
+
+export const types: Types = {
+  CONNECT,
+  CONNECT_OK,
+}
+
+type Connect = () => {
+  type: typeof CONNECT
+}
+
+type ConnectOK = () => {
+  type: typeof CONNECT_OK
+}
+
+export type ActionCreators = {
+  Connect: Connect,
+  ConnectOK: ConnectOK
+}
+
+export type State = {
+  connected: boolean
+}
