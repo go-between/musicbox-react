@@ -86,7 +86,7 @@ class UserSong extends React.Component<Props, {}> {
     const songIds = this.props.enqueuedSongs.map(queue => queue.song.id)
     return(
       <>
-        <UITabs p={2}>
+        <UITabs>
           <UITabs.TabList>
             <UITabs.Tab>
               <Flex alignItems="center">
@@ -103,7 +103,7 @@ class UserSong extends React.Component<Props, {}> {
             </UITabs.Tab>
           </UITabs.TabList>
 
-          <UITabs.TabPanels>
+          <UITabs.TabPanels py={4}>
             <UITabs.TabPanel>
               <Library
                 enqueueSongs={this.enqueueSongs}

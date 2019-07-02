@@ -16,6 +16,7 @@ type RoomSongs = {
 type Songs = {
   create: (youtubeId: string) => Promise<Types.APICreateSongResponse>
   library: () => Promise<Types.APISongResponse>
+  delete: (songId: string) => Promise<Types.APIDeleteSongUserResponse>
 }
 
 type Users = {
@@ -84,6 +85,14 @@ export default class Client {
         }
       }
     `)({ youtubeId }),
+
+    delete: (songId) => this.baseClient.mutate(`
+      (@autodeclare) {
+        deleteSongUser(input: { songId: $songId }) {
+          errors
+        }
+      }
+    `)({songId}),
 
     library: () => this.baseClient.query(`
       {
