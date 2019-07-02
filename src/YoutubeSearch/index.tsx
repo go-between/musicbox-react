@@ -10,14 +10,34 @@ import BgImage from '../components/bg-image'
 import { State as RootState } from '../reducers'
 import { actions, State } from './redux'
 
+const YoutubeSearchInput = system(
+  {
+    as: Flex,
+    alignItems: 'center',
+    bg: 'offWhite',
+    border: '1px solid',
+    borderColor: 'grayLight',
+    borderRadius: 4,
+    px: 2,
+    width: '100%',
+  },
+  'border',
+  'borderColor',
+  'borderRadius',
+  'color',
+  'space',
+  'width',
+)
+
 const Input = system(
   {
     as: 'input',
-    border: '1px solid',
-    borderColor: 'offWhite',
-    borderRadius: 4,
-    boxShadow: 1,
+    border: 'none',
+    bg: 'transparent',
     p: 2,
+  },
+  {
+    outline: 'none',
   },
   'border',
   'borderColor',
@@ -29,26 +49,53 @@ const Input = system(
   'width',
 )
 
+const SearchResults = system(
+  {
+    as: 'ul',
+    bg: 'white',
+    boxShadow: 1,
+    my: '2px',
+    px: 0,
+    width: '100%',
+  },
+  {
+    borderBottomLeftRadius: '4px',
+    borderBottomRightRadius: '4px',
+    listStyleType: 'none',
+    position: 'absolute',
+    top: '100%',
+    zIndex: '1000'
+  },
+  'boxShadow',
+  'color',
+  'space',
+  'width',
+)
+
+const SearchResultItem = system(
+  {
+    as: 'li',
+  }
+)
+
 const SearchResult = system(
   {
     as: Flex,
     alignItems: 'center',
-    borderRadius: 6,
     display: 'flex',
     p: 3,
   },
   props => ({
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: `${themeGet('colors.white')(props)}`,
-      boxShadow: `${themeGet('shadows.1')(props)}`
+      backgroundColor: `${themeGet('colors.offWhite')(props)}`,
     }
   }),
   'borderRadius'
 )
 
 type PassedProps = {
-  createSong: (youtubeId: string) => void
+  createSong: (youtubeId: string, options: {}) => void
 }
 type Props = PassedProps & State & typeof actions
 
@@ -61,12 +108,16 @@ class Room extends React.Component<Props, { createSong: () => void }> {
     const {
       results,
     } = this.props
+
+    const success = () => {
+      this.props.changeQuery('')
+      this.props.getResultsOK([])
+    }
     const searchResults = results.map(result => {
-      const onClick = () => this.props.createSong(result.id)
-      console.log(result)
+      const onClick = () => this.props.createSong(result.id, { success })
 
       return (
-        <List.Item key={result.id}>
+        <SearchResultItem key={result.id}>
           <SearchResult onClick={onClick}>
             <Box mr={3}>
               <BgImage
@@ -88,26 +139,27 @@ class Room extends React.Component<Props, { createSong: () => void }> {
               </Text>
             </Box>
           </SearchResult>
-        </List.Item>
+        </SearchResultItem>
       )
     })
     return(
       <>
-        <Flex alignItems="center" justifyContent="space-between" my={4} mx={1} px={2}>
-          <Box mr={3}>
+        <YoutubeSearchInput>
+          <Box>
             <Search size={16} />
           </Box>
+
           <Input
             type="search"
             value={this.props.query}
             onChange={this.changeQuery}
             width="100%"
           />
-        </Flex>
+        </YoutubeSearchInput>
 
-        <List>
+        <SearchResults>
           {searchResults}
-        </List>
+        </SearchResults>
       </>
     )
   }

@@ -13,7 +13,7 @@ class App extends React.Component {
     return (
       <>
         <Provider store={store}>
-          <TopNavHeader title="MusicBox" />
+          <TopNavHeader />
           <Container as="main" py={4}>
             <Router />
           </Container>
