@@ -6,6 +6,9 @@ const UITabs = system(
   {
     as: Tabs,
   },
+  'alignItems',
+  'display',
+  'flex',
   'space'
 )
 
@@ -16,7 +19,12 @@ UITabs.TabList = system(
   props => ({
     boxShadow: `0 1px 0 ${themeGet('colors.grayLight')(props)}`,
   }),
-  'boxShadow'
+  'alignItems',
+  'boxShadow',
+  'display',
+  'flex',
+  'justifyContent',
+  'space'
 )
 
 UITabs.Tab = system(
@@ -24,12 +32,17 @@ UITabs.Tab = system(
     as: Tab,
     bg: 'transparent',
     border: 'none',
-    px: 2,
-    py: 3,
+    p: 3,
   },
   props => ({
     cursor: 'pointer',
-    outlineColor: `${themeGet('colors.purple')(props)}`
+    // outlineColor: `${themeGet('colors.purple')(props)}`
+    outline: 'none',
+    '&:hover': {
+      backgroundColor: `${themeGet('colors.purpleXLight')(props)}`,
+      borderTopRightRadius: '4px',
+      borderTopLeftRadius: '4px',
+    }
   }),
   'boxShadow',
   'border',
@@ -41,12 +54,17 @@ UITabs.TabPanels = system(
   {
     as: TabPanels,
   },
+  'space'
 )
 
 UITabs.TabPanel = system(
   {
     as: TabPanel,
-  }
+  },
+  {
+    outline: 'none'
+  },
+  'space'
 )
 
 export default UITabs

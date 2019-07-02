@@ -11,6 +11,7 @@ const colors = {
   offWhite90: 'hsla(0, 0%, 90%)',
   purple: '#5E50B5',
   purpleLight: '#796fb5',
+  purpleXLight: '#dad5f5',
   red: '#c34848',
   redDark: '#9c292d',
   redLight: '#f7e2e2',
