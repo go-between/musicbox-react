@@ -11,6 +11,7 @@ import Player from './components/Player'
 import RoomSong from './components/RoomSong'
 import Users from './components/Users'
 import UserSong from './components/UserSong'
+import History from './components/History'
 
 import { State, types } from './redux'
 import UITabs from '../components/ui-tabs'
@@ -88,7 +89,7 @@ class Room extends React.Component<Props, {}> {
                   <Users roomId={id} />
                 </UITabs.TabPanel>
                 <UITabs.TabPanel>
-                  <Box p={4}>History!</Box>
+                  <History roomId={id}/>
                 </UITabs.TabPanel>
               </UITabs.TabPanels>
             </UITabs>

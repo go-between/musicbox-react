@@ -12,7 +12,7 @@ function* getUserQueue(
 
   const roomId = yield select((s: RootState) => s.room.base.id)
 
-  const response = yield apply(api, api.roomSongs.index, [roomId, true])
+  const response = yield apply(api, api.roomSongs.index, [{roomId, forUser: true}])
   const enqueuedSongs = response.roomSongs.map(queueDeserializer)
   yield put(actions.getUserQueueOK(action.returnOK, enqueuedSongs))
 }
@@ -39,8 +39,21 @@ function* removeQueue(
   yield apply(api, api.roomSongs.delete, [action.id])
 }
 
+function* getHistory(
+  action: ReturnType<ActionCreators['GetHistory']>,
+) {
+  const api = getSingleton()
+
+  const roomId = yield select((s: RootState) => s.room.base.id)
+
+  const response = yield apply(api, api.roomSongs.index, [{roomId, historical: true}])
+  const historicalSongs = response.roomSongs.map(queueDeserializer)
+  yield put(actions.getHistoryOK(action.returnOK, historicalSongs))
+}
+
 export default function* saga() {
   yield takeLatest(types.GET_USER_QUEUE, getUserQueue)
   yield takeLatest(types.UPDATE_QUEUE, updateQueue)
   yield takeLatest(types.REMOVE_QUEUE, removeQueue)
+  yield takeLatest(types.GET_HISTORY, getHistory)
 }

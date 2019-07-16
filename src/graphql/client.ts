@@ -8,7 +8,7 @@ type Rooms = {
 
 type OrderedSong = { songId: string; roomSongId: string }
 type RoomSongs = {
-  index: (roomId: string, forUser: boolean) => Promise<Types.APIRoomSongResponse>
+  index: (options: {roomId: string, forUser?: boolean, historical?: boolean}) => Promise<Types.APIRoomSongResponse>
   orderRoomSongs: (roomId: string, orderedSongs: OrderedSong[]) => Promise<Types.APIOrderRoomSongsResponse>
   delete: (id: string) => Promise<Types.APIDeleteRoomSongResponse>
 }
@@ -46,13 +46,13 @@ export default class Client {
   }
 
   roomSongs: RoomSongs = {
-    index: (roomId, forUser) => this.baseClient.query(`
+    index: ({roomId, forUser = false, historical = false}) => this.baseClient.query(`
       (@autodeclare) {
-        roomSongs(roomId: $roomId, forUser: $forUser) {
+        roomSongs(roomId: $roomId, forUser: $forUser, historical: $historical) {
           ...roomSong
         }
       }
-    `)({roomId, forUser}),
+    `)({roomId, forUser, historical}),
 
     delete: (id) => this.baseClient.mutate(`
       (@autodeclare) {

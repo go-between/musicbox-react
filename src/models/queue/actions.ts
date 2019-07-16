@@ -25,10 +25,23 @@ const removeQueue: ActionCreators['RemoveQueue'] = (id) => ({
   id
 })
 
+const getHistory: ActionCreators['GetHistory'] = (returnOK, returnERR) => ({
+  type: types.GET_HISTORY,
+  returnOK,
+  returnERR,
+})
+
+const getHistoryOK: ActionCreators['GetHistoryOK'] = (returnOK, historicalSongs) => ({
+  type: returnOK,
+  historicalSongs,
+})
+
 export default {
   getUserQueue,
   getUserQueueOK,
   getUserQueueERR,
+  getHistoryOK,
+  getHistory,
   updateQueue,
   removeQueue
 }
